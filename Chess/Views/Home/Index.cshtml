@@ -6,29 +6,54 @@
 <script src="~/Scripts/jquery-1.9.1.js"></script>
 <script src="~/Scripts/jquery-ui-1.10.2.min.js"></script>
 
-<table id="chessBoard">
-    @{    
+
+
+<div class="scoreboard">
+
+    <div class="redPlayerScore">
+        <h1 style="margin-right:200px">Jugador 1</h1>
+        <h2 style="margin-right:200px">Estadisticas</h2>
+        <h3 style="margin-right:200px">Victorias:</h3>
+        <h3 style="margin-right:200px">Derrotas:</h3>
+    </div>
+
+    <div class="bluePlayerScore">
+        <h1 style="margin-right:200px">Jugador 2</h1>
+        <h2 style="margin-right:200px">Estadisticas</h2>
+        <h3 style="margin-right:200px">Victorias:</h3>
+        <h3 style="margin-right:200px">Derrotas:</h3>
+    </div>
+
+
+</div>
+
+
+
+
+<table id="chessBoard" style="margin-left:100px">
+    @{
         for (int i = 1; i <= 8; i++)
         {
-        <tr>
-            @for (int j = 1; j <= 8; j++)
-            {
-                <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")' ><span></span>
-                    <p></p>
-                    @*@if (i==4){i+=2;}*@
-                    @foreach (var pieces in Model.pieces)
-                    {
-                        bool si = true;
-                        if (pieces.col == j && pieces.row == i &&si)
+            <tr>
+                @for (int j = 1; j <= 8; j++)
+                {
+                    <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
+                        <span></span>
+                        <p></p>
+                        @*@if (i==4){i+=2;}*@
+                        @foreach (var pieces in Model.pieces)
                         {
-                            
-                        <div id='@pieces.id' class='@pieces.color@pieces.name' data-color='@pieces.color'></div>
+                            bool si = true;
+                            if (pieces.col == j && pieces.row == i && si)
+                            {
+
+                                <div id='@pieces.id' class='@pieces.color@pieces.name' data-color='@pieces.color'></div>
+                            }
                         }
-                    }
-                </td>
-            }
-        </tr>
-        }        
+                    </td>
+                }
+            </tr>
+        }
     }
 </table>
 
@@ -41,21 +66,12 @@
     $("div").draggable({
         containment: "#chessBoard",
         revert: "invalid",
-        //helper: "clone",
-        //handle: "p",
-        // cancel: "p.ui-widget-header",
-        // snap: "td",
-        //  snapMode: "inner",//"inner", "outer", "both"
-        // grid: [ 50,50 ],
         scroll: false,
         cursor: "move",
         // cursorAt: { top: 56, left: 25 },
         start: function (event, ui) {//taş hareket ettirilmeden önceki konum bilgilerini al
             x = ui.offset.top;
             y = ui.offset.left;
-            //color = $("#25").css("background-color");
-            //$("#62").css("background-color", "#F2F5A9")
-            //$("#52").css("background-color", "#F2F5A9")
         },
         drag: function () {
         },
@@ -66,11 +82,6 @@
     });
 
     $("div[data-color=Black]").draggable('disable');
-
-    //$(".Whitepawn").draggable({ axis: "y" });
-    //$(".blackPawn").draggable({ axis: "y" });
-    //$(".Rook").draggable({ axis: "xy" });
-
 
     $("td").droppable({
         //activeClass: "state",        

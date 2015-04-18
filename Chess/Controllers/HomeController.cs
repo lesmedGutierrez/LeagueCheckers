@@ -174,37 +174,12 @@ namespace Chess.Controllers
 
             switch (piece.name)
             {
-                case "pawn"://
+                    case "pawn"://
                     {
                         int stepSize = piece.isStart == true ? 1 : 2;//ilk hareketinde 2 tane adım atabilir
                         Boolean backControl = piece.color == piece.getColor.black ? (piece.row - move.row > 0 ? false : true)
                                                                                   : (piece.row - move.row < 0 ? false : true); //geriye gidebilirmi?
                         result = backControl == true ? OControl(move, piece, stepSize, Direction) : "false;";//geriye gidebilirmi?                                               
-                        break;
-                    }
-                case "rook"://sadece x-y ekseninde hareket edebilir
-                    {
-                        result = OControl(move, piece, null, "direct");
-                        break;
-                    }
-                case "knight"://L iki ileri-geri  bir sağa-sola hareket edebilir
-                    {
-                        result = OControl(move, piece, null, "L");
-                        break;
-                    }
-                case "bishop"://sadece çapraz hareket edebilir
-                    {
-                        result = OControl(move, piece, null, "cross");
-                        break;
-                    }
-                case "queen"://her yöne hareket edebilir
-                    {
-                        result = OControl(move, piece, null, Direction);
-                        break;
-                    }
-                case "king"://heryöne hareket edebilir
-                    {
-                        result = OControl(move, piece, 1, Direction);
                         break;
                     }
             }

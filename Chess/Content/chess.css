@@ -1,4 +1,10 @@
-﻿td.black
+﻿
+.scoreBoard
+{
+    background-color:aqua
+}
+
+td.black
 {
     background-color: #67310d;
 }
@@ -76,7 +82,6 @@ div.whiteRook
     float: left;
     width: 65px;
     height: 85px;
-    margin-top: 0px;
     /*position:absolute;
     z-index:99;*/
 }
