@@ -111,5 +111,16 @@ namespace Chess.Helpers
         public String target { get; set; }
         public Int32 row { get; set; }
         public Int32 col { get; set; }
+        public moveC()
+        {
+
+        }
+
+        public moveC(int fila, int columna)
+        {
+            row = fila;
+            col = columna;
+        }
+
     }
 }
