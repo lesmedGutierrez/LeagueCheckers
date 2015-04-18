@@ -23,6 +23,7 @@ namespace Chess.Controllers
         {
             //ilk önce siyah taşları diz
             listPieces.pieces.Clear();
+
             int x1 = 1;//black pieces
             String color = "Black";
             bool control = false;
