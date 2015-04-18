@@ -13,47 +13,11 @@ namespace Chess.Helpers
     {
         properties p = new properties();
 
-        public properties rook
+        public properties crown
         {
             get
             {
-                p.name = p.getName.rook;
-                return p;
-            }
-        }
-
-        public properties knight
-        {
-            get
-            {
-                p.name = p.getName.knight;
-                return p;
-            }
-        }
-
-        public properties bishop
-        {
-            get
-            {
-                p.name = p.getName.bishop;
-                return p;
-            }
-        }
-
-        public properties queen
-        {
-            get
-            {
-                p.name = p.getName.queen;
-                return p;
-            }
-        }
-
-        public properties king
-        {
-            get
-            {
-                p.name = p.getName.king;
+                p.name = p.getName.crown;
                 return p;
             }
         }
@@ -91,11 +55,7 @@ namespace Chess.Helpers
 
     public class name
     {
-        public String rook { get { return "rook"; } }
-        public String knight { get { return "knight"; } }
-        public String bishop { get { return "bishop"; } }
-        public String queen { get { return "queen"; } }
-        public String king { get { return "king"; } }
+        public String crown { get { return "crown"; } }
         public String pawn { get { return "pawn"; } }
     }
 

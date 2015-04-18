@@ -138,6 +138,17 @@ namespace Chess.Controllers
                             }
                         }
                         isMoveable = true;
+                        /*
+                         * Espacio de código designado para Coronas
+                        if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
+                        {
+                            piece.name = "crown";
+                        }
+                        else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
+                        {
+                            piece.name = "crown";
+                        }
+                         */
                         break;
                     }
                
