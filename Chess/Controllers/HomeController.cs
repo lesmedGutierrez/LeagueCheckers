@@ -87,21 +87,25 @@ namespace Chess.Controllers
             {
                 case "cross":
                     {
-                        
-                        //if (piece.row == move.row || piece.col == move.col) break;
-
                         if (stepSize == null)
                         {
                             stepSize = Math.Abs(move.col - piece.col);
                         }
                         else
                         {
-                            if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
+                            if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
+                            {
+                                if (!isEatable(move, piece)){
+                                    break;
+                                }
+                            }
+                            else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
                             {
                                 break;
                             }
                         }
-                        if (!isFree(move)) 
+                        
+                        if (isEmpty(move)!=null) 
                         {
                             break;
                         }
@@ -146,11 +150,11 @@ namespace Chess.Controllers
             {
                 if (ps.Count == 0)//önünde taş yoksa hareket edebilir
                 {
-                    if (Direction == "cross" && piece.name == piece.getName.pawn)
-                    { }
+                    if (!(Direction == "cross" && piece.name == piece.getName.pawn))
+                    { isMoveable = true;}
                     else
                     {
-                        isMoveable = true;
+                        
                     }
                 }
 
@@ -187,17 +191,66 @@ namespace Chess.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        bool isFree(moveC move){
-            foreach (properties piece in listPieces.pieces)
-	        {
-                if (move.col == piece.col && move.row == piece.row)
-	            {
-		            return false;
-	            }		 
-	        }
+        properties isEmpty(moveC move)
+        {
+            foreach (properties pc in listPieces.pieces)
+            {
+                if (move.col == pc.col && move.row == pc.row)
+                {
+                    return pc;
+                }
+            }
+            return null;
+            
+        }
+        bool isEatable(moveC move, properties piece)
+        {
+            int rowTemp, colTemp;
+            rowTemp = eatable_index(piece.row, move.row);
+            colTemp = eatable_index(piece.col, move.col);
+            moveC move_piece = new moveC(rowTemp, colTemp);
+            properties isEmp = isEmpty(move_piece);
+            if (isEmp != null)
+            {
+                if (isEmp.color != piece.color)
+                {
+                    isEmp = null;
+                    return true;
+                }
+            }
+            return false ;
+
+            
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <param name="dir">1 arriba-derecha</param>
+        /// <param name="campo"></param>
+        /// <returns></returns>
+        bool valIndexces(int row, int col, int dir, int campo)
+        {
+            if (row - 2 < 1 || col - 2 < 1 || row + 2 > 8 || col + 2 > 8)
+            {
+                return false;
+            }
             return true;
         }
+        int eatable_index(int v, int m)
+        {
+            if (m > v)
+            {
+                return m - 1;
+            }
+            else if (m < v)
+            {
+                return m + 1;
 
+            }
+            return 0;
 
+        }
     }
 }
