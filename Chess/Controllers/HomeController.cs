@@ -93,12 +93,18 @@ namespace Chess.Controllers
                         }
                         else
                         {
-                            if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
+                            if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
+                            {
+                                if (!isEatable(move, piece)){
+                                    break;
+                                }
+                            }
+                            else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
                             {
                                 break;
                             }
                         }
-                        isEateble(move, piece);
+                        
                         if (isEmpty(move)!=null) 
                         {
                             break;
@@ -198,29 +204,22 @@ namespace Chess.Controllers
             return null;
             
         }
-        bool isEateble(moveC move, properties piece)
+        bool isEatable(moveC move, properties piece)
         {
-
-            if (Math.Abs(piece.row - move.row) != 2 || Math.Abs(piece.col - move.col) != 2)
+            int rowTemp, colTemp;
+            rowTemp = eatable_index(piece.row, move.row);
+            colTemp = eatable_index(piece.col, move.col);
+            moveC move_piece = new moveC(rowTemp, colTemp);
+            properties isEmp = isEmpty(move_piece);
+            if (isEmp != null)
             {
-                int rowTemp, colTemp;
-
-                rowTemp = eatable_index(piece.row, move.row);
-                colTemp = eatable_index(piece.col, move.col);
-                moveC move_piece = new moveC(rowTemp, colTemp);
-                properties isEmp = isEmpty(move_piece);
-
-
-            }
-
-            foreach (properties pc in listPieces.pieces)
-            {
-                if (move.col == pc.col && move.row == pc.row)
+                if (isEmp.color != piece.color)
                 {
-                    return false;
+                    isEmp = null;
+                    return true;
                 }
             }
-            return true;
+            return false ;
 
             
         }
