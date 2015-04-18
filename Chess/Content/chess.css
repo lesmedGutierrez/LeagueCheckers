@@ -46,8 +46,8 @@ div.whitePawn
     background-image: url('../Content/pieces.png');
     background-repeat: no-repeat;
     float: left;
-    width: 85px;
-    height: 75px;
+    width: 73px;
+    height: 60px;
     margin-top: 0px;
     /*position:absolute;
     z-index:99;*/
@@ -59,8 +59,8 @@ div.blackPawn
     background-image: url('../Content/pieces.png');
     background-repeat: no-repeat;
     float: left;
-    width: 85px;
-    height: 75px;
+    width: 73px;
+    height: 60px;
     /*position:absolute;
     z-index:99;*/
 }
