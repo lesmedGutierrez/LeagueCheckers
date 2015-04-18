@@ -1,8 +1,14 @@
 ﻿
-.scoreBoard
+.redPlayerScore
 {
-    background-color:aqua
+    margin-right:100px
 }
+
+.bluePlayerScore
+{
+    margin-left:300px
+}
+
 
 td.black
 {
