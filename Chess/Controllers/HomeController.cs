@@ -95,8 +95,16 @@ namespace Chess.Controllers
                         {
                             if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
                             {
-                                if (!isEatable(move, piece)){
+                                properties eaten = isEatable(move, piece);
+                                if (eaten==null){
+                                    //removeID = eaten.id;
                                     break;
+                                }
+                                else
+                                {
+                                    string id = eaten.id;
+                                    removeID = id;
+
                                 }
                             }
                             else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
@@ -165,6 +173,7 @@ namespace Chess.Controllers
                     piece.isStart = true;// ilk hareket aktif et
                 }
             }
+            listPieces.removePiece(removeID);
             return isMoveable + ";" + removeID;
         }
 
@@ -203,7 +212,7 @@ namespace Chess.Controllers
             return null;
             
         }
-        bool isEatable(moveC move, properties piece)
+        properties isEatable(moveC move, properties piece)
         {
             int rowTemp, colTemp;
             rowTemp = eatable_index(piece.row, move.row);
@@ -214,11 +223,11 @@ namespace Chess.Controllers
             {
                 if (isEmp.color != piece.color)
                 {
-                    isEmp = null;
-                    return true;
+                    //isEmp = null;
+                    return isEmp;
                 }
             }
-            return false ;
+            return isEmp ;
 
             
         }
