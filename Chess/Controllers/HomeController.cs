@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Chess.Helpers;
 using Chess.Models;
+using System.Text;
+using System.Web.UI.HtmlControls;
+using System.Web.UI;
 
 namespace Chess.Controllers
 {
@@ -76,6 +79,7 @@ namespace Chess.Controllers
         
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
+
             String removeID = "";//silinecek taşın id si
             Boolean isMoveable = false;//taş hareket edebilirmi
             List<cor> se = new List<cor>();
@@ -115,6 +119,7 @@ namespace Chess.Controllers
                         
                         if (isEmpty(move)!=null) 
                         {
+                            removeID = "";
                             break;
                         }
 
@@ -138,17 +143,31 @@ namespace Chess.Controllers
                             }
                         }
                         isMoveable = true;
-                        /*
-                         * Espacio de código designado para Coronas
+                        
                         if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
                         {
-                            piece.name = "crown";
+                            pieces Pieces = new pieces();//pawn
+                            Pieces.crown.col = move.col;
+                            Pieces.crown.id = piece.id;
+                            Pieces.crown.row = move.col;
+                            Pieces.crown.color = "White";
+                            listPieces.removePiece(piece.id);
+                            listPieces.pieces.Add(Pieces.crown);
                         }
                         else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
                         {
                             piece.name = "crown";
                         }
-                         */
+                         
+                        /*
+                        pieces Pieces = new pieces();//pawn
+                        Pieces.pawn.col = i;
+                        Pieces.pawn.id = j.ToString() + i.ToString() + color + Pieces.pawn.name;
+                        Pieces.pawn.row = x1;
+                        Pieces.pawn.color = color;
+                        listPieces.removePiece(removeID);
+                        listPieces.pieces.Add(Pieces.pawn);
+                         * */
                         break;
                     }
                
