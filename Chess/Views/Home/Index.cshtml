@@ -1,19 +1,26 @@
 ﻿@model Chess.Models.chessModel
 
+<!DOCTYPE html>
+<html>
+<head>
+<title>League Checkers - A ***** Journey</title>
+
 <link href="~/Content/chess.css" rel="stylesheet" />
-@*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />*@ 
+@*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />*@
 
 <script src="~/Scripts/jquery-1.9.1.js"></script>
 <script src="~/Scripts/jquery-ui-1.10.2.min.js"></script>
 
+</head>
+<body>
 
-<body background="~/Content/MatchBackground.png">
+    <img src="~/Content/MatchBackground.png" /><img />
 
     <div class="scoreboard">
         <div id="redPlayerDetails">
             <h1 id="redplayerName">Jugador 1</h1>
             <div id="redPlayerScore" class="score">
-                <h3 id="redPlayerWins" >Victorias:</h3>
+                <h3 id="redPlayerWins">Victorias:</h3>
                 <h3 id="redPlayerLosts">Derrotas:</h3>
             </div>
         </div>
@@ -86,7 +93,7 @@
     $("div[data-color=Black]").draggable('disable');
 
     $("td").droppable({
-        //activeClass: "state",        
+        //activeClass: "state",
         hoverClass: "ui-state-active",
         drop: function (event, ui) {
 
@@ -133,3 +140,4 @@
     })
 </script>
 
+</html>
