@@ -117,3 +117,25 @@ div.blackPawn
     /*position:absolute;
     z-index:99;*/
 }
+
+div.blackCrown
+{
+    background-position: -110px -15px;
+    background-image: url('../Content/pieces.png');
+    background-repeat: no-repeat;
+    float: left;
+    width: 73px;
+    height: 60px;
+    /*position:absolute;
+    z-index:99;*/
+}
+
+div.whiteCrown
+{
+    background-position: -110px -110px;
+    background-image: url('../Content/pieces.png');
+    background-repeat: no-repeat;
+    float: left;
+    width: 73px;
+    height: 60px;
+}
