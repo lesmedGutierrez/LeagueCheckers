@@ -9,6 +9,43 @@ td.white
     background-color: #d58753;
 }
 
+#chessBoard
+{
+    padding-left:125
+}
+
+
+#redPlayerDetails
+{
+    float:left;
+    margin-left:30px;
+}
+
+#bluePlayerDetails
+{
+    float:right;
+    padding-right:30px;
+
+}
+
+
+#redplayerName
+{
+    color:#782323;
+    padding-right:40px
+    
+}
+#bluePlayerName
+{
+    color:midnightblue
+}
+
+#bluePlayerScore
+{
+    padding-right:100px;
+}
+
+
 /*span
 {
     z-index: 122;
