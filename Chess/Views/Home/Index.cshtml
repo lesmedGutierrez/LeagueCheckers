@@ -11,6 +11,8 @@
 
 
 <body>
+
+    <img alt="full screen background image" src="~/Content/MatchBackground.png" id="full-screen-background-image" /> 
     <div class="scoreboard">
         <div id="redPlayerDetails">
             <h1 id="redplayerName">Jugador 1</h1>
@@ -56,13 +58,14 @@
             }
         }
     </table>
-
 </body>
-
 </html>
 
 
+
 <script>
+
+
     var x, y;
     var counter = 0;
     var pieces;
@@ -74,7 +77,7 @@
         scroll: false,
         cursor: "move",
         // cursorAt: { top: 56, left: 25 },
-        start: function (event, ui) {//taş hareket ettirilmeden önceki konum bilgilerini al
+        start: function (event, ui) {//tas hareket ettirilmeden önceki konum bilgilerini al
             x = ui.offset.top;
             y = ui.offset.left;
         },
