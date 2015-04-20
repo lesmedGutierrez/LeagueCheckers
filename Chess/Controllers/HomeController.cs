@@ -106,9 +106,15 @@ namespace Chess.Controllers
                                 }
                                 else
                                 {
-                                    string id = eaten.id;
-                                    removeID = id;
-
+                                    if (eaten.color != piece.color)
+                                    {
+                                        string id = eaten.id;
+                                        removeID = id;
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
                                 }
                             }
                             else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
