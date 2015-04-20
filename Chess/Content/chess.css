@@ -25,6 +25,8 @@ td.white
 
 #chessBoard
 {
+    align-self:center;
+
     padding-left: 8.3em;
     padding-top:0.5em
 
@@ -33,13 +35,16 @@ td.white
 
 #redPlayerDetails
 {
+
     float:left;
-    margin-left:30px;
+    text-align:left;
+    padding-left:30px;
 }
 
 #bluePlayerDetails
 {
     float:right;
+    text-align:right;
     padding-right:30px;
 
 }
@@ -56,10 +61,6 @@ td.white
     color:midnightblue
 }
 
-#bluePlayerScore
-{
-    padding-right:100px;
-}
 
 
 /*span
@@ -101,7 +102,6 @@ div.whitePawn
     float: left;
     width: 73px;
     height: 60px;
-    margin-top: 0px;
     /*position:absolute;
     z-index:99;*/
 }

@@ -1,6 +1,5 @@
 ﻿@model Chess.Models.chessModel
 
-
 <html>
 <head>
     <title>League Checkers - A ***** Journey</title>
@@ -8,14 +7,15 @@
     @*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />*@
 
     <script src="~/Scripts/jquery-1.9.1.js"></script>
-    <script src="~/Scripts/jquery-ui-1.10.2.min.js"></script>
+    <meta name="description" content="The description of my page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
 
     <img src="~/Content/MatchBackground.png" /><img />
 
-    <div class="scoreboard">
+    <div class="scoreboard" onmousedown="return false">
         <div id="redPlayerDetails">
             <h1 id="redplayerName">Jugador 1</h1>
             <div id="redPlayerScore" class="score">
@@ -25,7 +25,7 @@
         </div>
 
 
-        <div id="bluePlayerDetails">
+        <div id="bluePlayerDetails" onmousedown="return false">
             <h1 id="blueplayerName">Jugador 2</h1>
             <div id="bluePlayerScore" class="score">
                 <h3 id="bluePlayerWins">Victorias:</h3>
@@ -61,82 +61,80 @@
             }
         }
     </table>
-</body>
 
+    <script>
+        var x, y;
+        var counter = 0;
+        var pieces;
+        var color = "";
 
-
-<script>
-    var x, y;
-    var counter = 0;
-    var pieces;
-    var color = "";
-
-    $("div").draggable({
-        containment: "#chessBoard",
-        revert: "invalid",
-        scroll: false,
-        cursor: "move",
-        // cursorAt: { top: 56, left: 25 },
-        start: function (event, ui) {//taş hareket ettirilmeden önceki konum bilgilerini al
-            x = ui.offset.top;
-            y = ui.offset.left;
-        },
-        drag: function () {
-        },
-        stop: function (event, ui) {
-            //$("#" + event.originalEvent.target.id).offset({ top: x, left: y })
-            //$("#62").css("background-color", color)
-        }
-    });
-
-    $("div[data-color=Black]").draggable('disable');
-
-    $("td").droppable({
-        //activeClass: "state",
-        hoverClass: "ui-state-active",
-        drop: function (event, ui) {
-
-            var value = {
-                id: ui.draggable[0].id,
-                target: event.target.id,
-                col: event.target.id.substr(1, 1),
-                row: event.target.id.substr(0, 1)
+        $("div").draggable({
+            containment: "#chessBoard",
+            revert: "invalid",
+            scroll: false,
+            cursor: "move",
+            // cursorAt: { top: 56, left: 25 },
+            start: function (event, ui) {//taş hareket ettirilmeden önceki konum bilgilerini al
+                x = ui.offset.top;
+                y = ui.offset.left;
+            },
+            drag: function () {
+            },
+            stop: function (event, ui) {
+                //$("#" + event.originalEvent.target.id).offset({ top: x, left: y })
+                //$("#62").css("background-color", color)
             }
+        });
 
-            $.ajax({
-                url: '@Url.Action("moveControl", "Home")',
-                type: "POST",
-                data: value,
-                beforeSend: function (xhr) {
-                },
-                success: function (str) {
-                    var result = str.split(';');
-                    if (result[0] == "True") {
-                        counter++;
-                        if (counter % 2 == 0) {
-                            $("div[data-color=Black]").draggable('disable');
-                            $("div[data-color=White]").draggable('enable');
-                        } else {
-                            $("div[data-color=Black]").draggable('enable');
-                            $("div[data-color=White]").draggable('disable');
-                        }
-                        if (result[1]) {
-                            $("#" + result[1]).hide("explode", 1000);
-                            $("#" + result[1]).remove();
-                        }
-                    } else {
-                        $("#" + ui.draggable[0].id).offset({ top: x, left: y })
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
+        $("div[data-color=Black]").draggable('disable');
+
+        $("td").droppable({
+            //activeClass: "state",
+            hoverClass: "ui-state-active",
+            drop: function (event, ui) {
+
+                var value = {
+                    id: ui.draggable[0].id,
+                    target: event.target.id,
+                    col: event.target.id.substr(1, 1),
+                    row: event.target.id.substr(0, 1)
                 }
-            });
-            //$(this)
-            //.addClass("ui-state-highlight")
-            //.find("p")
-            //.html("Dropped!");
-        }
-    })
-</script>
+
+                $.ajax({
+                    url: '@Url.Action("moveControl", "Home")',
+                    type: "POST",
+                    data: value,
+                    beforeSend: function (xhr) {
+                    },
+                    success: function (str) {
+                        var result = str.split(';');
+                        if (result[0] == "True") {
+                            counter++;
+                            if (counter % 2 == 0) {
+                                $("div[data-color=Black]").draggable('disable');
+                                $("div[data-color=White]").draggable('enable');
+                            } else {
+                                $("div[data-color=Black]").draggable('enable');
+                                $("div[data-color=White]").draggable('disable');
+                            }
+                            if (result[1]) {
+                                $("#" + result[1]).hide("explode", 1000);
+                                $("#" + result[1]).remove();
+                            }
+                        } else {
+                            $("#" + ui.draggable[0].id).offset({ top: x, left: y })
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+                //$(this)
+                //.addClass("ui-state-highlight")
+                //.find("p")
+                //.html("Dropped!");
+            }
+        })
+    </script>
+</body>
 
 </html>
