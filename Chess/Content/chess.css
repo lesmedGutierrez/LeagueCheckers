@@ -1,12 +1,8 @@
 ﻿
-body,html
-{
-    margin:0;
-    padding:0;
-}
 
-img
+html
 {
+    background: url(/Content/MatchBackground.png);
     position:absolute;
     z-index:-1;
     width:100%;
@@ -37,14 +33,12 @@ td.white
 {
 
     float:left;
-    text-align:left;
     padding-left:30px;
 }
 
 #bluePlayerDetails
 {
     float:right;
-    text-align:right;
     padding-right:30px;
 
 }
@@ -83,16 +77,6 @@ td
     height: 80px;
 }
 
-/*p
-{
-    position:absolute;
-    width:40px;
-    height:40px;    
-    opacity:0.1;
-    z-index:98;
-    top:30px;
-    left:30px;
-}*/
 
 div.whitePawn
 {
