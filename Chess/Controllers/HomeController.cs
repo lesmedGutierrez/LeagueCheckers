@@ -81,6 +81,7 @@ namespace Chess.Controllers
         {
 
             String removeID = "";//silinecek taşın id si
+            String crownID = "";
             Boolean isMoveable = false;//taş hareket edebilirmi
             List<cor> se = new List<cor>();
             List<properties> ps = new List<properties>();
@@ -152,28 +153,39 @@ namespace Chess.Controllers
                         
                         if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
                         {
-                            pieces Pieces = new pieces();//pawn
+                            pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
                             Pieces.crown.id = piece.id;
                             Pieces.crown.row = move.col;
                             Pieces.crown.color = "White";
                             listPieces.removePiece(piece.id);
                             listPieces.pieces.Add(Pieces.crown);
+                            crownID = piece.id;
                         }
                         else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
                         {
-                            piece.name = "crown";
+                            pieces Pieces = new pieces();//newCrown
+                            Pieces.crown.col = move.col;
+                            Pieces.crown.id = piece.id;
+                            Pieces.crown.row = move.col;
+                            Pieces.crown.color = "Black";
+                            listPieces.removePiece(piece.id);
+                            listPieces.pieces.Add(Pieces.crown);
+                            crownID = piece.id;
                         }
-                         
-                        /*
-                        pieces Pieces = new pieces();//pawn
-                        Pieces.pawn.col = i;
-                        Pieces.pawn.id = j.ToString() + i.ToString() + color + Pieces.pawn.name;
-                        Pieces.pawn.row = x1;
-                        Pieces.pawn.color = color;
-                        listPieces.removePiece(removeID);
-                        listPieces.pieces.Add(Pieces.pawn);
-                         * */
+                        /*pieces Pieces = new pieces();//newCrown
+                        Pieces.crown.col = move.col;
+                        Pieces.crown.id = piece.id;
+                        Pieces.crown.row = move.col;
+                        Pieces.crown.color = piece.color;
+                        listPieces.removePiece(piece.id);
+                        listPieces.pieces.Add(Pieces.crown);
+                        crownID = piece.id;*/
+                        break;
+                    }
+
+                case "crown":
+                    {
                         break;
                     }
                
@@ -210,7 +222,7 @@ namespace Chess.Controllers
                 }
             }
             listPieces.removePiece(removeID);
-            return isMoveable + ";" + removeID;
+            return isMoveable + ";" + removeID + ";" + crownID;
         }
 
         
@@ -231,6 +243,12 @@ namespace Chess.Controllers
                         result = backControl == true ? OControl(move, piece, stepSize, Direction) : "false;";//geriye gidebilirmi?                                               
                         break;
                     }
+                    //WIP, working on the moves of the crown
+                    /*case "crown":
+                    {
+                        result = true ? OControl(move, piece, 0, "cross") : "false";
+                        break;
+                    }*/
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);

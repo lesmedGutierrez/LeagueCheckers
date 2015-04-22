@@ -125,6 +125,16 @@
                             $("#" + result[1]).hide("explode", 1000);
                             $("#" + result[1]).remove();
                         }
+                        if (result[2]) {
+                            $("#" + result[2]).hide();
+                            if (counter % 2 == 0) {
+                                $("#" + result[2]).addClass('blackCrown').removeClass('blackPawn');
+                                
+                            } else {
+                                $("#" + result[2]).addClass('whiteCrown').removeClass('whitePawn');
+                            }
+                            $("#" + result[2]).show("pulsate", 2000);
+                        }
                     } else {
                         $("#" + ui.draggable[0].id).offset({ top: x, left: y })
                     }
