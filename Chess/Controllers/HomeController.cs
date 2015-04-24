@@ -151,7 +151,7 @@ namespace Chess.Controllers
                         }
                         isMoveable = true;
                         
-                        if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
+                        /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
@@ -172,20 +172,26 @@ namespace Chess.Controllers
                             listPieces.removePiece(piece.id);
                             listPieces.pieces.Add(Pieces.crown);
                             crownID = piece.id;
-                        }
-                        /*pieces Pieces = new pieces();//newCrown
+                        }*/
+                        pieces Pieces = new pieces();//newCrown
                         Pieces.crown.col = move.col;
                         Pieces.crown.id = piece.id;
-                        Pieces.crown.row = move.col;
+                        Pieces.crown.row = move.row;
                         Pieces.crown.color = piece.color;
                         listPieces.removePiece(piece.id);
                         listPieces.pieces.Add(Pieces.crown);
-                        crownID = piece.id;*/
+                        crownID = piece.id;
                         break;
                     }
 
                 case "crown":
                     {
+                        int xDif = Math.Abs(piece.row - move.row);
+                        int yDif = Math.Abs(piece.col - move.col);
+                        if (Math.Abs(piece.row - move.row) == Math.Abs(piece.col - move.col))
+                        {
+                            isMoveable = true;
+                        }
                         break;
                     }
                
@@ -222,6 +228,7 @@ namespace Chess.Controllers
                 }
             }
             listPieces.removePiece(removeID);
+            
             return isMoveable + ";" + removeID + ";" + crownID;
         }
 
@@ -244,11 +251,11 @@ namespace Chess.Controllers
                         break;
                     }
                     //WIP, working on the moves of the crown
-                    /*case "crown":
+                    case "crown":
                     {
-                        result = true ? OControl(move, piece, 0, "cross") : "false";
+                        result = true ? OControl(move, piece, 0, "crown") : "false";
                         break;
-                    }*/
+                    }
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);

@@ -130,7 +130,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\ch.png" />
     <Content Include="Content\chess.css" />
-    <Content Include="Content\MatchBackground.png" />
+    <Content Include="Content\MatchBackground.jpg" />
     <Content Include="Content\Minions 2.png" />
     <Content Include="Content\pices3d1.jpg" />
     <Content Include="Content\pieces.png" />

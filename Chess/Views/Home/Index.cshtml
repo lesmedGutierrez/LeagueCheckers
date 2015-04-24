@@ -12,7 +12,7 @@
 
 <body>
 
-    <img alt="full screen background image" src="~/Content/MatchBackground.png" id="full-screen-background-image" /> 
+    <img alt="full screen background image" src="~/Content/MatchBackground.jpg" id="full-screen-background-image" /> 
     <div class="scoreboard">
         <div id="redPlayerDetails">
             <h1 id="redplayerName">Jugador 1</h1>
@@ -122,7 +122,7 @@
                             $("div[data-color=White]").draggable('disable');
                         }
                         if (result[1]) {
-                            $("#" + result[1]).hide("explode", 1000);
+                            $("#" + result[1]).hide("explode", 200);
                             $("#" + result[1]).remove();
                         }
                         if (result[2]) {
