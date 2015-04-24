@@ -32,32 +32,34 @@
         </div>
     </div>
 
-    <table id="chessBoard">
-        @{
-            for (int i = 1; i <= 8; i++)
-            {
-                <tr>
-                    @for (int j = 1; j <= 8; j++)
-                    {
-                        <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
-                            <span></span>
-                            <p></p>
-                            @*@if (i==4){i+=2;}*@
-                            @foreach (var pieces in Model.pieces)
-                            {
-                                bool si = true;
-                                if (pieces.col == j && pieces.row == i && si)
+    <div id="chessBoard">
+        <table id="tablero">
+            @{
+                for (int i = 1; i <= 8; i++)
+                {
+                    <tr>
+                        @for (int j = 1; j <= 8; j++)
+                        {
+                            <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
+                                <span></span>
+                                <p></p>
+                                @*@if (i==4){i+=2;}*@
+                                @foreach (var pieces in Model.pieces)
                                 {
+                                    bool si = true;
+                                    if (pieces.col == j && pieces.row == i && si)
+                                    {
 
-                                    <div id='@pieces.id' class='@pieces.color@pieces.name' data-color='@pieces.color'></div>
+                                        <div id='@pieces.id' class='@pieces.color@pieces.name' data-color='@pieces.color'></div>
+                                    }
                                 }
-                            }
-                        </td>
-                    }
-                </tr>
+                            </td>
+                        }
+                    </tr>
+                }
             }
-        }
-    </table>
+        </table>
+    </div>
 </body>
 </html>
 
