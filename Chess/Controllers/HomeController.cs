@@ -173,14 +173,14 @@ namespace Chess.Controllers
                             listPieces.pieces.Add(Pieces.crown);
                             crownID = piece.id;
                         }*/
-                        pieces Pieces = new pieces();//newCrown
+                        /*pieces Pieces = new pieces();//newCrown
                         Pieces.crown.col = move.col;
                         Pieces.crown.id = piece.id;
                         Pieces.crown.row = move.row;
                         Pieces.crown.color = piece.color;
                         listPieces.removePiece(piece.id);
                         listPieces.pieces.Add(Pieces.crown);
-                        crownID = piece.id;
+                        crownID = piece.id;*/
                         break;
                     }
 
