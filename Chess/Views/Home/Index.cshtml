@@ -16,54 +16,69 @@
 
 
 <body>
-    <div class="container">
+    <div class="container" id="main">
+
+
+
         <img alt="full screen background image" src="~/Content/MatchBackground.jpg" id="full-screen-background-image" />
-        <div class="row" id="scoreBoard">
-            <div id="redPlayerDetails" class="col-sm-4">
-                <h1 id="redplayerName">Jugador 1</h1>
-                <div id="redPlayerScore" class="score">
-                    <h3 id="redPlayerWins">Victorias:</h3>
-                    <h3 id="redPlayerLosts">Derrotas:</h3>
-                </div>
-            </div>
 
-            <table id="chessBoard" class="">
-                @{
-                    for (int i = 1; i <= 8; i++)
-                    {
-                        <tr>
-                            @for (int j = 1; j <= 8; j++)
-                            {
-                                <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
-                                    <span></span>
-                                    <p></p>
-                                    @*@if (i==4){i+=2;}*@
-                                    @foreach (var pieces in Model.pieces)
-                                    {
-                                        bool si = true;
-                                        if (pieces.col == j && pieces.row == i && si)
-                                        {
-
-                                            <div id=@pieces.id class=@pieces.color@pieces.name data-color=@pieces.color></div>
-                                        }
-                                    }
-                                </td>
-                            }
-                        </tr>
-                    }
-                }
-            </table>
-
-            <div id="bluePlayerDetails" class="col-sm-4">
-                <h1 id="blueplayerName">Jugador 2</h1>
-                <div id="bluePlayerScore" class="score">
-                    <h3 id="bluePlayerWins">Victorias:</h3>
-                    <h3 id="bluePlayerLosts">Derrotas:</h3>
-                </div>
-            </div>
+        <div class="row" id="empty"style="height:10%">
+            <div class="col-md-2"></div>
         </div>
 
-    </div>
+        
+
+            <div class="row" id="game">
+
+                <div id="redPlayerDetails" class="col-md-2">
+                    <h2 id="redplayerName">Jugador 1</h2>
+                    <div id="redPlayerScore" class="score">
+                        <h3 id="redPlayerWins">Victorias:</h3>
+                        <h3 id="redPlayerLosts">Derrotas:</h3>
+                    </div>
+                </div>
+
+
+
+                <div id="tablero" class="col-md-6">
+                    <table id="chessBoard" style="">
+                        @{
+                            for (int i = 1; i <= 8; i++)
+                            {
+                                <tr>
+                                    @for (int j = 1; j <= 8; j++)
+                                    {
+                                        <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
+                                            <span></span>
+                                            <p></p>
+                                            @*@if (i==4){i+=2;}*@
+                                            @foreach (var pieces in Model.pieces)
+                                            {
+                                                bool si = true;
+                                                if (pieces.col == j && pieces.row == i && si)
+                                                {
+
+                                                    <div id=@pieces.id class=@pieces.color@pieces.name data-color=@pieces.color></div>
+                                                }
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+
+                <div id="bluePlayerDetails" class="col-md-3 ">
+                    <h2 id="blueplayerName">Jugador 2</h2>
+                    <div id="bluePlayerScore" class="score">
+                        <h4 id="bluePlayerWins">Victorias:</h4>
+                        <h4 id="bluePlayerLosts">Derrotas:</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 </body>
 </html>
 

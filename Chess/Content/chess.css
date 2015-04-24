@@ -11,6 +11,7 @@ td.white
 }
 
 html, body {
+  
   height: 100%;
   width: 100%;
   padding: 0;
@@ -37,16 +38,16 @@ html, body {
 }
 
 
-
-
+#game{
+    padding-top:3%;
+}
 
 #redPlayerDetails
 {
     /*height:600px;
     width:300px;*/
-
-    float:left;
     text-align:left;
+    float:left
 
 }
 
@@ -54,7 +55,6 @@ html, body {
 {
     /*height:600px;
     width:300px;*/
-
     float:right;
     text-align:right
 }
