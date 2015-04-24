@@ -2,7 +2,10 @@
 <html>
 <head>
     <title>League Checkers - A ***** Journey</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/Content/chess.css" rel="stylesheet" />
+
     @*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />*@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -13,53 +16,54 @@
 
 
 <body>
-
-    <img alt="full screen background image" src="~/Content/MatchBackground.jpg" id="full-screen-background-image" /> 
-    <div class="scoreboard">
-        <div id="redPlayerDetails">
-            <h1 id="redplayerName">Jugador 1</h1>
-            <div id="redPlayerScore" class="score">
-                <h3 id="redPlayerWins">Victorias:</h3>
-                <h3 id="redPlayerLosts">Derrotas:</h3>
+    <div class="container">
+        <img alt="full screen background image" src="~/Content/MatchBackground.jpg" id="full-screen-background-image" />
+        <div class="row" id="scoreBoard">
+            <div id="redPlayerDetails" class="col-sm-4">
+                <h1 id="redplayerName">Jugador 1</h1>
+                <div id="redPlayerScore" class="score">
+                    <h3 id="redPlayerWins">Victorias:</h3>
+                    <h3 id="redPlayerLosts">Derrotas:</h3>
+                </div>
             </div>
-        </div>
 
-
-        <div id="bluePlayerDetails">
-            <h1 id="blueplayerName">Jugador 2</h1>
-            <div id="bluePlayerScore" class="score">
-                <h3 id="bluePlayerWins">Victorias:</h3>
-                <h3 id="bluePlayerLosts">Derrotas:</h3>
-            </div>
-        </div>
-    </div>
-
-        <table id="tablero">
-            @{
-                for (int i = 1; i <= 8; i++)
-                {
-                    <tr>
-                        @for (int j = 1; j <= 8; j++)
-                        {
-                            <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
-                                <span></span>
-                                <p></p>
-                                @*@if (i==4){i+=2;}*@
-                                @foreach (var pieces in Model.pieces)
-                                {
-                                    bool si = true;
-                                    if (pieces.col == j && pieces.row == i && si)
+            <table id="chessBoard" class="">
+                @{
+                    for (int i = 1; i <= 8; i++)
+                    {
+                        <tr>
+                            @for (int j = 1; j <= 8; j++)
+                            {
+                                <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
+                                    <span></span>
+                                    <p></p>
+                                    @*@if (i==4){i+=2;}*@
+                                    @foreach (var pieces in Model.pieces)
                                     {
+                                        bool si = true;
+                                        if (pieces.col == j && pieces.row == i && si)
+                                        {
 
-                                        <div id='@pieces.id' class='@pieces.color@pieces.name' data-color='@pieces.color'></div>
+                                            <div id=@pieces.id class=@pieces.color@pieces.name data-color=@pieces.color></div>
+                                        }
                                     }
-                                }
-                            </td>
-                        }
-                    </tr>
+                                </td>
+                            }
+                        </tr>
+                    }
                 }
-            }
-        </table>
+            </table>
+
+            <div id="bluePlayerDetails" class="col-sm-4">
+                <h1 id="blueplayerName">Jugador 2</h1>
+                <div id="bluePlayerScore" class="score">
+                    <h3 id="bluePlayerWins">Victorias:</h3>
+                    <h3 id="bluePlayerLosts">Derrotas:</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>
 
@@ -73,7 +77,27 @@
     var pieces;
     var color = "";
 
-    $("div").draggable({
+
+
+    $(".Whitepawn").draggable({
+        containment: "#chessBoard",
+        revert: "invalid",
+        scroll: false,
+        cursor: "move",
+        // cursorAt: { top: 56, left: 25 },
+        start: function (event, ui) {//tas hareket ettirilmeden önceki konum bilgilerini al
+            x = ui.offset.top;
+            y = ui.offset.left;
+        },
+        drag: function () {
+        },
+        stop: function (event, ui) {
+            //$("#" + event.originalEvent.target.id).offset({ top: x, left: y })
+            //$("#62").css("background-color", color)
+        }
+    });
+
+    $(".Blackpawn").draggable({
         containment: "#chessBoard",
         revert: "invalid",
         scroll: false,
@@ -131,7 +155,7 @@
                             $("#" + result[2]).hide();
                             if (counter % 2 == 0) {
                                 $("#" + result[2]).addClass('blackCrown').removeClass('blackPawn');
-                                
+
                             } else {
                                 $("#" + result[2]).addClass('whiteCrown').removeClass('whitePawn');
                             }
