@@ -31,38 +31,50 @@ html, body {
 
 #chessBoard
 {
+    width:20;
+    height:auto;
     align-self:center;
-    padding-left: 10% ;
-    padding-top: 1%;
+    padding-left: 27% ;
+    padding-top: 10%;
 
 }
+
+
+
 
 
 #redPlayerDetails
 {
+    height:600px;
+    width:300px;
 
     float:left;
-    padding-top:8%;
-    padding-left:4%;
+
 }
 
 #bluePlayerDetails
 {
+    height:600px;
+    width:300px;
+
     float:right;
-    padding-top:7%;
-    padding-right:4%;
 }
 
 
 #redplayerName
 {
     color:#782323;
-    padding-right:40px
+    padding-top:34%;
+    padding-left:13%
+
     
 }
 #bluePlayerName
 {
-    color:midnightblue
+    color:midnightblue;
+    padding-top:31%;
+    padding-left:30%;
+
 }
 
 
