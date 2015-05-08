@@ -121,7 +121,7 @@
     </Compile>
     <Compile Include="Helpers\Chess.cs" />
     <Compile Include="Helpers\Engine.cs" />
-    <Compile Include="Models\chessModel.cs" />
+    <Compile Include="Models\Board.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +212,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Partial1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

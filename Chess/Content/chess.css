@@ -83,8 +83,8 @@ td
     background: #dadada /*{bgColorHover}*/ url(images/ui-bg_glass_75_dadada_1x400.png) /*{bgImgUrlHover}*/ 50% /*{bgHoverXPos}*/ 50% /*{bgHoverYPos}*/ repeat-x /*{bgHoverRepeat}*/;
     font-weight: normal /*{fwDefault}*/;
     color: #212121 /*{fcHover}*/;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
 }
 
 
@@ -94,7 +94,7 @@ div.whitePawn
     background-image: url('../Content/pieces.png');
     background-repeat: no-repeat;
     float: left;
-    width: 73px;
+    width: 60px;
     height: 60px;
     /*position:absolute;
     z-index:99;*/
@@ -106,13 +106,13 @@ div.blackPawn
     background-image: url('../Content/pieces.png');
     background-repeat: no-repeat;
     float: left;
-    width: 73px;
+    width: 60px;
     height: 60px;
     /*position:absolute;
     z-index:99;*/
 }
 
-div.blackCrown
+Crown
 {
     background-position: -110px -15px;
     background-image: url('../Content/pieces.png');

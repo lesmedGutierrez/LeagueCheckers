@@ -12,7 +12,7 @@ namespace Chess.Helpers
     public class pieces
     {
         properties p = new properties();
-
+        
         public properties crown
         {
             get
@@ -36,6 +36,15 @@ namespace Chess.Helpers
     {
         name n = new name();
         color c = new color();
+
+        public properties()
+        {
+            color = "Blank";
+
+        }
+
+
+
 
         public name getName { get { return n; } }
         public String name { get; set; }
