@@ -121,7 +121,6 @@
     </Compile>
     <Compile Include="Helpers\Chess.cs" />
     <Compile Include="Helpers\Engine.cs" />
-    <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

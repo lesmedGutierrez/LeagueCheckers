@@ -13,9 +13,8 @@ namespace Chess.Controllers
 {
     public class HomeController : Controller
     {
-        public static Board listPieces = new Board();
-        public Cell[,] board = new Cell[8, 8];
-        public static List<ColRowHistory> coorhistory = new List<ColRowHistory>()
+        public static Board board = new Board();
+        public static List<ColRowHistory> coorhistory = new List<ColRowHistory>();
 
 
         public class cor
@@ -27,7 +26,7 @@ namespace Chess.Controllers
         public ActionResult Index()
         {
             //ilk önce siyah taşları diz
-            listPieces.pieces.Clear();
+            board.pieces.Clear();
 
 
             int x1 = 1;//black pieces
@@ -55,7 +54,7 @@ namespace Chess.Controllers
                         Pieces.pawn.id = j.ToString()+i.ToString()+ color + Pieces.pawn.name;
                         Pieces.pawn.row = x1;
                         Pieces.pawn.color = color;
-                        listPieces.pieces.Add(Pieces.pawn);
+                        board.pieces.Add(Pieces.pawn);
                         control = false;
                     }
                     else
@@ -67,7 +66,7 @@ namespace Chess.Controllers
                 
             }
             /*
-            foreach (var pieces in listPieces.pieces)
+            foreach (var pieces in board.pieces)
             {
                 coorhistory.Add(new ColRowHistory
                 {
@@ -77,12 +76,12 @@ namespace Chess.Controllers
                 });
             }
             */
-            return View(listPieces);
+            return View(board);
         }
         
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
-            listPieces.currentColorTurn = piece.color;
+            board.currentColorTurn = piece.color;
 
             String removeID = "";//silinecek taşın id si
             String crownID = "";
@@ -92,96 +91,86 @@ namespace Chess.Controllers
             var item = new cor();
             int x = piece.row;
             int y = piece.col;
-                switch (Direction)
-                {
+            switch (Direction)
+            {
                     case "cross":
                         {
-                            //Es posible comer.
-
-
-                            if(){
-                            if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
+                            if (board.getPiece(move.row, move.col).color == "Blank")
                             {
-                                //PARCHE, Arreglar despues
-                                properties pieceToEat = listPieces.getPiece(move.row,move.col);
-                                if ((pieceToEat.color != "Blank") && (pieceToEat.color != listPieces.currentColorTurn) && (listPieces.getPiece(move.row, move.col).color == "Blank"))
+                                if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
                                 {
-                                    string id = pieceToEat.id;
-                                    removeID = id;
+                                    properties pieceToEat = board.getEatenPiece(piece,move);
+                                    if ((pieceToEat.color != "Blank") && (pieceToEat.color != board.currentColorTurn) && (board.getPiece(move.row, move.col).color == "Blank"))
+                                    {
+                                        string id = pieceToEat.id;
+                                        removeID = id;
 
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
                                 }
-                                else
+
+                                else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
                                 {
                                     break;
                                 }
-                            }
 
-                            else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
-                            {
-                                break;
-                            }
+                                for (int i = 1; i <= stepSize; i++)
+                                {
+                                    if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
+                                    {
+                                        se.Add(new cor() { col = y + i, row = x + i });
+                                    }
+                                    if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
+                                    {
+                                        se.Add(new cor() { col = y - i, row = x - i });
+                                    }
+                                    if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
+                                    {
+                                        se.Add(new cor() { col = y - i, row = x + i });
+                                    }
+                                    if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
+                                    {
+                                        se.Add(new cor() { col = y + i, row = x - i });
+                                    }
+                                }
+                                isMoveable = true;
 
-                            else if (listPieces.getPiece(move.row,move.col).color != "Blank")                           
-                            {
-                                removeID = "";
-                                break;
-                            }
-
-                            for (int i = 1; i <= stepSize; i++)
-                            {
-                                if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
+                                /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
                                 {
-                                    se.Add(new cor() { col = y + i, row = x + i });
+                                    pieces Pieces = new pieces();//newCrown
+                                    Pieces.crown.col = move.col;
+                                    Pieces.crown.id = piece.id;
+                                    Pieces.crown.row = move.col;
+                                    Pieces.crown.color = "White";
+                                    board.removePiece(piece.id);
+                                    board.pieces.Add(Pieces.crown);
+                                    crownID = piece.id;
                                 }
-                                if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
+                                else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
                                 {
-                                    se.Add(new cor() { col = y - i, row = x - i });
-                                }
-                                if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
-                                {
-                                    se.Add(new cor() { col = y - i, row = x + i });
-                                }
-                                if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
-                                {
-                                    se.Add(new cor() { col = y + i, row = x - i });
-                                }
-                            }
-                            isMoveable = true;
-                        }
-                            /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
-                            {
-                                pieces Pieces = new pieces();//newCrown
+                                    pieces Pieces = new pieces();//newCrown
+                                    Pieces.crown.col = move.col;
+                                    Pieces.crown.id = piece.id;
+                                    Pieces.crown.row = move.col;
+                                    Pieces.crown.color = "Black";
+                                    board.removePiece(piece.id);
+                                    board.pieces.Add(Pieces.crown);
+                                    crownID = piece.id;
+                                }*/
+                                /*pieces Pieces = new pieces();//newCrown
                                 Pieces.crown.col = move.col;
                                 Pieces.crown.id = piece.id;
-                                Pieces.crown.row = move.col;
-                                Pieces.crown.color = "White";
-                                listPieces.removePiece(piece.id);
-                                listPieces.pieces.Add(Pieces.crown);
-                                crownID = piece.id;
+                                Pieces.crown.row = move.row;
+                                Pieces.crown.color = piece.color;
+                                board.removePiece(piece.id);
+                                board.pieces.Add(Pieces.crown);
+                                crownID = piece.id;*/
                             }
-                            else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
-                            {
-                                pieces Pieces = new pieces();//newCrown
-                                Pieces.crown.col = move.col;
-                                Pieces.crown.id = piece.id;
-                                Pieces.crown.row = move.col;
-                                Pieces.crown.color = "Black";
-                                listPieces.removePiece(piece.id);
-                                listPieces.pieces.Add(Pieces.crown);
-                                crownID = piece.id;
-                            }*/
-                            /*pieces Pieces = new pieces();//newCrown
-                            Pieces.crown.col = move.col;
-                            Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.row;
-                            Pieces.crown.color = piece.color;
-                            listPieces.removePiece(piece.id);
-                            listPieces.pieces.Add(Pieces.crown);
-                            crownID = piece.id;*/
                             break;
                         }
-
-
                     case "crown":
                         {
                             int xDif = Math.Abs(piece.row - move.row);
@@ -199,7 +188,7 @@ namespace Chess.Controllers
 
                 foreach (var direct in se)//hareket ettiği eksende hangi taşlar var
                 {
-                    foreach (var pc in listPieces.pieces)
+                    foreach (var pc in board.pieces)
                     {
                         if (direct.row == pc.row && direct.col == pc.col)
                         {
@@ -225,17 +214,18 @@ namespace Chess.Controllers
                         piece.isStart = true;// ilk hareket aktif et
                     }
                 }
-                listPieces.removePiece(removeID);
+                board.removePiece(removeID);
             
             
             return isMoveable + ";" + removeID + ";" + crownID;
 
         }
 
+
         
         public JsonResult moveControl(moveC move)
         {
-            var piece = (from pc in listPieces.pieces where pc.id == move.id select pc).FirstOrDefault();
+            var piece = (from pc in board.pieces where pc.id == move.id select pc).FirstOrDefault();
             string result = "", Direction = "";
 
             Direction = (piece.row == move.row || piece.col == move.col) ? "direct" : "cross";
@@ -259,6 +249,7 @@ namespace Chess.Controllers
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
+
         }
 
  

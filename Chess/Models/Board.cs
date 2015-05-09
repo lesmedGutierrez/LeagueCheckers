@@ -140,5 +140,22 @@ namespace Chess.Models
 
 
 
+
+        public properties getEatenPiece(properties piece, moveC move)
+        {
+            //Going to top. 
+            if (move.row < piece.row)
+            {
+                //If Diagonal to the right do.. else...
+                return move.col > piece.col ? getPiece(move.row+1,move.col-1):getPiece(move.row+1,move.col+1);
+            }
+            //Going to bottom.
+            else
+            {
+                //If Diagonal to the right  do.. else.. 
+                return move.col > piece.col ? getPiece(move.row -1, move.col - 1) : getPiece(move.row + 1, move.col - 1);
+
+            }
+        }
     }
 }
