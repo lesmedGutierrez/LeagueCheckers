@@ -14,7 +14,10 @@ namespace Chess.Controllers
     public class HomeController : Controller
     {
         public static Board listPieces = new Board();
-        public static List<ColRowHistory> coorhistory = new List<ColRowHistory>();
+        public Cell[,] board = new Cell[8, 8];
+        public static List<ColRowHistory> coorhistory = new List<ColRowHistory>()
+
+
         public class cor
         {
             public int col { get; set; }
@@ -94,10 +97,13 @@ namespace Chess.Controllers
                     case "cross":
                         {
                             //Es posible comer.
+
+
+                            if(){
                             if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
                             {
                                 //PARCHE, Arreglar despues
-                                properties pieceToEat = getPieceToEat(move, piece);
+                                properties pieceToEat = listPieces.getPiece(move.row,move.col);
                                 if ((pieceToEat.color != "Blank") && (pieceToEat.color != listPieces.currentColorTurn) && (listPieces.getPiece(move.row, move.col).color == "Blank"))
                                 {
                                     string id = pieceToEat.id;
@@ -141,7 +147,7 @@ namespace Chess.Controllers
                                 }
                             }
                             isMoveable = true;
-
+                        }
                             /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
                             {
                                 pieces Pieces = new pieces();//newCrown
@@ -255,58 +261,6 @@ namespace Chess.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        properties getSelectedCellPiece(moveC move)
-        {
-            foreach (properties pc in listPieces.pieces)
-            {
-                if (move.col == pc.col && move.row == pc.row)
-                {
-                    return pc;
-                }
-            }
-            return null;
-        }
-
-  
-
-
-        properties getPieceToEat(moveC move, properties piece)
-        {
-            int rowTemp, colTemp;
-            rowTemp = eatable_index(piece.row, move.row);
-            colTemp = eatable_index(piece.col, move.col);
-
-            //Agregar condicion especial para coronas. 
-
-            properties pieceToEat = listPieces.getPiece(rowTemp,colTemp);
-            return pieceToEat;
-        }
-
-
-        bool valIndexces(int row, int col, int dir, int campo)
-        {
-            if (row - 2 < 1 || col - 2 < 1 || row + 2 > 8 || col + 2 > 8)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        int eatable_index(int v, int m)
-        {
-            //Funcion sin mantenibilidad.
-
-            if (m > v)
-            {
-                return m - 1;
-            }
-            else if (m < v)
-            {
-                return m + 1;
-
-            }
-            return 0;
-
-        }
+ 
     }
 }
