@@ -14,8 +14,6 @@ namespace Chess.Controllers
     public class HomeController : Controller
     {
         public static Board board = new Board();
-        public static List<ColRowHistory> coorhistory = new List<ColRowHistory>();
-
 
         public class cor
         {
@@ -65,27 +63,16 @@ namespace Chess.Controllers
                 x1++;
                 
             }
-            /*
-            foreach (var pieces in board.pieces)
-            {
-                coorhistory.Add(new ColRowHistory
-                {
-                    id = pieces.id,
-                    col = pieces.col,
-                    row = pieces.row
-                });
-            }
-            */
             return View(board);
         }
         
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
             board.currentColorTurn = piece.color;
-
-            String removeID = "";//silinecek taşın id si
+            bool jumpCheck = board.hasJump();
+            String removeID = "";
             String crownID = "";
-            Boolean isMoveable = false;//taş hareket edebilirmi
+            Boolean isMoveable = false;
             List<cor> se = new List<cor>();
             List<properties> ps = new List<properties>();
             var item = new cor();
@@ -95,28 +82,22 @@ namespace Chess.Controllers
             {
                     case "cross":
                         {
+
                             if (board.getPiece(move.row, move.col).color == "Blank")
                             {
                                 if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
                                 {
                                     properties pieceToEat = board.getEatenPiece(piece,move);
-                                    if ((pieceToEat.color != "Blank") && (pieceToEat.color != board.currentColorTurn) && (board.getPiece(move.row, move.col).color == "Blank"))
+                                    if ((pieceToEat.color != board.currentColorTurn) && (board.getPiece(move.row, move.col).color == "Blank"))
                                     {
                                         string id = pieceToEat.id;
                                         removeID = id;
-
                                     }
                                     else
                                     {
                                         break;
                                     }
                                 }
-
-                                else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
-                                {
-                                    break;
-                                }
-
                                 for (int i = 1; i <= stepSize; i++)
                                 {
                                     if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+

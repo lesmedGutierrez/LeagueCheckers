@@ -153,7 +153,7 @@ namespace Chess.Models
             else
             {
                 //If Diagonal to the right  do.. else.. 
-                return move.col > piece.col ? getPiece(move.row -1, move.col - 1) : getPiece(move.row + 1, move.col - 1);
+                return move.col > piece.col ? getPiece(move.row -1, move.col -1) : getPiece(move.row -1, move.col + 1);
 
             }
         }

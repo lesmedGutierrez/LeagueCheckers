@@ -68,11 +68,6 @@ namespace Chess.Helpers
         public String pawn { get { return "pawn"; } }
     }
 
-    public class ColRowHistory {
-        public String id { get; set; }
-        public Int32 row { get; set; }
-        public Int32 col { get; set; }
-    }
 
     public class moveC
     {
