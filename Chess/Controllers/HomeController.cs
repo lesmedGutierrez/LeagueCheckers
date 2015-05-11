@@ -88,7 +88,7 @@ namespace Chess.Controllers
                                 if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
                                 {
                                     properties pieceToEat = board.getEatenPiece(piece,move);
-                                    if ((pieceToEat.color != board.currentColorTurn) && (board.getPiece(move.row, move.col).color == "Blank"))
+                                    if ((pieceToEat.color != board.currentColorTurn && pieceToEat.color != "Blank") && (board.getPiece(move.row, move.col).color == "Blank"))
                                     {
                                         string id = pieceToEat.id;
                                         removeID = id;
