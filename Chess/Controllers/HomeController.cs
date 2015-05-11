@@ -98,6 +98,10 @@ namespace Chess.Controllers
                                         break;
                                     }
                                 }
+                                else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
+                                {
+                                    break;
+                                }
                                 for (int i = 1; i <= stepSize; i++)
                                 {
                                     if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
