@@ -112,13 +112,13 @@ div.blackPawn
     z-index:99;*/
 }
 
-Crown
+div.blackCrown
 {
     background-position: -110px -15px;
     background-image: url('../Content/pieces.png');
     background-repeat: no-repeat;
     float: left;
-    width: 73px;
+    width: 60px;
     height: 60px;
     /*position:absolute;
     z-index:99;*/
@@ -130,6 +130,6 @@ div.whiteCrown
     background-image: url('../Content/pieces.png');
     background-repeat: no-repeat;
     float: left;
-    width: 73px;
+    width: 60px;
     height: 60px;
 }

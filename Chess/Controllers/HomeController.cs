@@ -138,37 +138,27 @@ namespace Chess.Controllers
                             }
                         }
                         isMoveable = true;
-
-                        /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
+                        //Verificación para convertir la pieza en corona
+                        /*if (piece.name == "pawn" && (move.row == 1 || move.row == 8))
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
                             Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;
-                            Pieces.crown.color = "White";
-                            board.removePiece(piece.id);
-                            board.pieces.Add(Pieces.crown);
-                            crownID = piece.id;
-                        }
-                        else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
-                        {
-                            pieces Pieces = new pieces();//newCrown
-                            Pieces.crown.col = move.col;
-                            Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;
-                            Pieces.crown.color = "Black";
+                            Pieces.crown.row = move.col;        
+                            piece.color = piece.color;
                             board.removePiece(piece.id);
                             board.pieces.Add(Pieces.crown);
                             crownID = piece.id;
                         }*/
-                        /*pieces Pieces = new pieces();//newCrown
+                        //PARCHE, Convierte una ficha en crown
+                        pieces Pieces = new pieces();//newCrown
                         Pieces.crown.col = move.col;
                         Pieces.crown.id = piece.id;
-                        Pieces.crown.row = move.row;
-                        Pieces.crown.color = piece.color;
+                        Pieces.crown.row = move.col;
+                        piece.color = piece.color;
                         board.removePiece(piece.id);
                         board.pieces.Add(Pieces.crown);
-                        crownID = piece.id;*/
+                        crownID = piece.id;
 
                         break;
                     }

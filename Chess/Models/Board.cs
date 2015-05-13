@@ -81,7 +81,7 @@ namespace Chess.Models
                 return true;
             }
             if (col > 1 && row < 6 &&
-               getPiece(row + 1, col - 1).color == "White" && getPiece(row + 2, col - 2).color == "Bank") // check jump to the left
+               getPiece(row + 1, col - 1).color == "White" && getPiece(row + 2, col - 2).color == "Blank") // check jump to the left
             {
                 return true;
             }
