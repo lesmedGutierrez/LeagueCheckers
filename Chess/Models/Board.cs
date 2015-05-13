@@ -10,6 +10,7 @@ namespace Chess.Models
     {
         public List<properties> pieces = new List<properties>();
         public string currentColorTurn = "";
+        public const int SIZE = 8;
 
 
 
@@ -21,11 +22,11 @@ namespace Chess.Models
 
 
         private bool canPawnJump(properties piece)
-        {
-            int col = piece.col;
+        {   
             int row = piece.row;
+            int col = piece.col;
 
-            if (piece.name == "pawn" && currentColorTurn == "White")
+            if (currentColorTurn == "White")
             {
 
                 if (piece.row > 1 && piece.col > 1 &&
@@ -39,7 +40,7 @@ namespace Chess.Models
                     return true;
                 }
             }
-            else if (piece.name == "pawn" && currentColorTurn == "Black")
+            else if (currentColorTurn == "Black")
             {
                 if (col > 1 && row < 6 &&
                    getPiece(row + 1, col - 1).color == "White" && getPiece(row + 2, col - 2).color == "Blank") // check jump to the left
@@ -62,11 +63,11 @@ namespace Chess.Models
             int row = piece.row;
 
             string opponent;
-            if (piece.name == "crown")
+            if (currentColorTurn == "White")
             {
                 opponent = "Black";
             }
-            else // DARKKING
+            else 
             {
                 opponent = "White";
             }
@@ -128,14 +129,18 @@ namespace Chess.Models
 
         public properties getPiece(int row, int col)
         {
-            for (int i = 0; i < pieces.Count; i++)
+            if (row <= 8 && col <= 8)
             {
-                if (pieces[i].row == row && pieces[i].col == col)
+                for (int i = 0; i < pieces.Count; i++)
                 {
-                    return pieces[i];
+                    if (pieces[i].row == row && pieces[i].col == col)
+                    {
+                        return pieces[i];
+                    }
                 }
+                return new properties("Blank");
             }
-            return new properties();
+            return new properties("");
         }
 
 
@@ -160,6 +165,8 @@ namespace Chess.Models
 
         public bool emptyCell(int row, int col)
         {
+            string p = getPiece(row, col).color;
+
             return getPiece(row, col).color == "Blank" ? true : false;
         }
     }
