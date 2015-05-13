@@ -49,7 +49,7 @@ namespace Chess.Controllers
                     {
                         pieces Pieces = new pieces();//pawn
                         Pieces.pawn.col = i;
-                        Pieces.pawn.id = j.ToString()+i.ToString()+ color + Pieces.pawn.name;
+                        Pieces.pawn.id = j.ToString() + i.ToString() + color + Pieces.pawn.name;
                         Pieces.pawn.row = x1;
                         Pieces.pawn.color = color;
                         board.pieces.Add(Pieces.pawn);
@@ -61,34 +61,39 @@ namespace Chess.Controllers
                     }
                 }
                 x1++;
-                
+
             }
             return View(board);
         }
-        
+
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
             board.currentColorTurn = piece.color;
-            bool jumpCheck = board.hasJump();
             String removeID = "";
             String crownID = "";
             Boolean isMoveable = false;
+            bool SelectedCellEmpty = board.emptyCell(move.row, move.col);
+            bool jumpAvailable = board.hasJump();
             List<cor> se = new List<cor>();
             List<properties> ps = new List<properties>();
             var item = new cor();
             int x = piece.row;
             int y = piece.col;
+            //borrar este comentario
+            int Borrar = 0;
             switch (Direction)
             {
-                    case "cross":
+                case "cross":
+                    {
+                        if (SelectedCellEmpty)
                         {
-
-                            if (board.getPiece(move.row, move.col).color == "Blank")
+                            if (jumpAvailable)
                             {
+                                //Try to eat. 
                                 if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
                                 {
-                                    properties pieceToEat = board.getEatenPiece(piece,move);
-                                    if ((pieceToEat.color != board.currentColorTurn && pieceToEat.color != "Blank") && (board.getPiece(move.row, move.col).color == "Blank"))
+                                    properties pieceToEat = board.getEatenPiece(piece, move);
+                                    if ((pieceToEat.color != board.currentColorTurn) && pieceToEat.color != "Blank")
                                     {
                                         string id = pieceToEat.id;
                                         removeID = id;
@@ -98,116 +103,128 @@ namespace Chess.Controllers
                                         break;
                                     }
                                 }
-                                else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
+                                else
                                 {
                                     break;
                                 }
-                                for (int i = 1; i <= stepSize; i++)
-                                {
-                                    if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
-                                    {
-                                        se.Add(new cor() { col = y + i, row = x + i });
-                                    }
-                                    if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
-                                    {
-                                        se.Add(new cor() { col = y - i, row = x - i });
-                                    }
-                                    if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
-                                    {
-                                        se.Add(new cor() { col = y - i, row = x + i });
-                                    }
-                                    if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
-                                    {
-                                        se.Add(new cor() { col = y + i, row = x - i });
-                                    }
-                                }
-                                isMoveable = true;
-
-                                /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
-                                {
-                                    pieces Pieces = new pieces();//newCrown
-                                    Pieces.crown.col = move.col;
-                                    Pieces.crown.id = piece.id;
-                                    Pieces.crown.row = move.col;
-                                    Pieces.crown.color = "White";
-                                    board.removePiece(piece.id);
-                                    board.pieces.Add(Pieces.crown);
-                                    crownID = piece.id;
-                                }
-                                else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
-                                {
-                                    pieces Pieces = new pieces();//newCrown
-                                    Pieces.crown.col = move.col;
-                                    Pieces.crown.id = piece.id;
-                                    Pieces.crown.row = move.col;
-                                    Pieces.crown.color = "Black";
-                                    board.removePiece(piece.id);
-                                    board.pieces.Add(Pieces.crown);
-                                    crownID = piece.id;
-                                }*/
-                                /*pieces Pieces = new pieces();//newCrown
-                                Pieces.crown.col = move.col;
-                                Pieces.crown.id = piece.id;
-                                Pieces.crown.row = move.row;
-                                Pieces.crown.color = piece.color;
-                                board.removePiece(piece.id);
-                                board.pieces.Add(Pieces.crown);
-                                crownID = piece.id;*/
                             }
-                            break;
-                        }
-                    case "crown":
-                        {
-                            int xDif = Math.Abs(piece.row - move.row);
-                            int yDif = Math.Abs(piece.col - move.col);
-                            if (Math.Abs(piece.row - move.row) == Math.Abs(piece.col - move.col))
+                            else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
                             {
-                                isMoveable = true;
+                                break;
                             }
+                        }
+                        else
+                        {
                             break;
                         }
 
-
-                }
-
-
-                foreach (var direct in se)//hareket ettiği eksende hangi taşlar var
-                {
-                    foreach (var pc in board.pieces)
-                    {
-                        if (direct.row == pc.row && direct.col == pc.col)
+                        for (int i = 1; i <= stepSize; i++)
                         {
-                            ps.Add(pc);
+                            if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
+                            {
+                                se.Add(new cor() { col = y + i, row = x + i });
+                            }
+                            if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
+                            {
+                                se.Add(new cor() { col = y - i, row = x - i });
+                            }
+                            if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
+                            {
+                                se.Add(new cor() { col = y - i, row = x + i });
+                            }
+                            if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
+                            {
+                                se.Add(new cor() { col = y + i, row = x - i });
+                            }
                         }
-                    }
-                }
+                        isMoveable = true;
 
-                if (se.Count > 0)
-                {
-                    if (ps.Count == 0)//önünde taş yoksa hareket edebilir
+                        /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
+                        {
+                            pieces Pieces = new pieces();//newCrown
+                            Pieces.crown.col = move.col;
+                            Pieces.crown.id = piece.id;
+                            Pieces.crown.row = move.col;
+                            Pieces.crown.color = "White";
+                            board.removePiece(piece.id);
+                            board.pieces.Add(Pieces.crown);
+                            crownID = piece.id;
+                        }
+                        else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
+                        {
+                            pieces Pieces = new pieces();//newCrown
+                            Pieces.crown.col = move.col;
+                            Pieces.crown.id = piece.id;
+                            Pieces.crown.row = move.col;
+                            Pieces.crown.color = "Black";
+                            board.removePiece(piece.id);
+                            board.pieces.Add(Pieces.crown);
+                            crownID = piece.id;
+                        }*/
+                        /*pieces Pieces = new pieces();//newCrown
+                        Pieces.crown.col = move.col;
+                        Pieces.crown.id = piece.id;
+                        Pieces.crown.row = move.row;
+                        Pieces.crown.color = piece.color;
+                        board.removePiece(piece.id);
+                        board.pieces.Add(Pieces.crown);
+                        crownID = piece.id;*/
+
+                        break;
+                    }
+                case "crown":
                     {
-                        if (!(Direction == "cross" && piece.name == piece.getName.pawn))
+                        int xDif = Math.Abs(piece.row - move.row);
+                        int yDif = Math.Abs(piece.col - move.col);
+                        if (Math.Abs(piece.row - move.row) == Math.Abs(piece.col - move.col))
                         {
                             isMoveable = true;
                         }
+                        break;
                     }
 
-                    if (isMoveable == true)//hareket kabul edildiyse
+
+
+            }
+
+
+            foreach (var direct in se)//hareket ettiği eksende hangi taşlar var
+            {
+                foreach (var pc in board.pieces)
+                {
+                    if (direct.row == pc.row && direct.col == pc.col)
                     {
-                        piece.col = move.col;//kalenin yeni sutun değerini güncelle
-                        piece.row = move.row;//kalenin yeni satır değeri güncelle
-                        piece.isStart = true;// ilk hareket aktif et
+                        ps.Add(pc);
                     }
                 }
-                board.removePiece(removeID);
-            
-            
+            }
+
+            if (se.Count > 0)
+            {
+                if (ps.Count == 0)//önünde taş yoksa hareket edebilir
+                {
+                    if (!(Direction == "cross" && piece.name == piece.getName.pawn))
+                    {
+                        isMoveable = true;
+                    }
+                }
+
+                if (isMoveable == true)//hareket kabul edildiyse
+                {
+                    piece.col = move.col;//kalenin yeni sutun değerini güncelle
+                    piece.row = move.row;//kalenin yeni satır değeri güncelle
+                    piece.isStart = true;// ilk hareket aktif et
+                }
+            }
+            board.removePiece(removeID);
+
+
             return isMoveable + ";" + removeID + ";" + crownID;
 
         }
 
 
-        
+
         public JsonResult moveControl(moveC move)
         {
             var piece = (from pc in board.pieces where pc.id == move.id select pc).FirstOrDefault();
@@ -217,7 +234,7 @@ namespace Chess.Controllers
 
             switch (piece.name)
             {
-                    case "pawn"://
+                case "pawn"://
                     {
                         int stepSize = piece.isStart == true ? 1 : 2;//ilk hareketinde 2 tane adım atabilir
                         Boolean backControl = piece.color == piece.getColor.black ? (piece.row - move.row > 0 ? false : true)
@@ -225,8 +242,8 @@ namespace Chess.Controllers
                         result = backControl == true ? OControl(move, piece, stepSize, Direction) : "false;";//geriye gidebilirmi?                                               
                         break;
                     }
-                    //WIP, working on the moves of the crown
-                    case "crown":
+                //WIP, working on the moves of the crown
+                case "crown":
                     {
                         result = true ? OControl(move, piece, 0, "crown") : "false";
                         break;
@@ -237,6 +254,6 @@ namespace Chess.Controllers
 
         }
 
- 
+
     }
 }

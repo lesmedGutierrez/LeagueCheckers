@@ -157,5 +157,10 @@ namespace Chess.Models
 
             }
         }
+
+        public bool emptyCell(int row, int col)
+        {
+            return getPiece(row, col).color == "Blank" ? true : false;
+        }
     }
 }
