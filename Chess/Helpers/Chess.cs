@@ -39,7 +39,13 @@ namespace Chess.Helpers
 
         public properties()
         {
-            color = "Blank";
+
+        }
+
+
+        public properties(string color)
+        {
+            this.color = color;
 
         }
 
@@ -50,8 +56,8 @@ namespace Chess.Helpers
         public String name { get; set; }
         public color getColor { get { return c; } }
         public String color { get; set; }
-        public Int32 row { get; set; }
-        public Int32 col { get; set; }
+        public int row { get; set; }
+        public int col { get; set; }
         public String id { get; set; }
         public Boolean isStart { get; set; }
     }
@@ -73,8 +79,8 @@ namespace Chess.Helpers
     {
         public String id { get; set; }
         public String target { get; set; }
-        public Int32 row { get; set; }
-        public Int32 col { get; set; }
+        public int row { get; set; }
+        public int col { get; set; }
         public moveC()
         {
 
