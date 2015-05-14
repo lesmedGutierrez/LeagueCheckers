@@ -139,7 +139,7 @@ namespace Chess.Controllers
                         }
                         isMoveable = true;
                         //Verificación para convertir la pieza en corona
-                        /*if (piece.name == "pawn" && (move.row == 1 || move.row == 8))
+                        if (piece.name == "pawn" && (move.row == 1 || move.row == 8))
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
@@ -149,16 +149,16 @@ namespace Chess.Controllers
                             board.removePiece(piece.id);
                             board.pieces.Add(Pieces.crown);
                             crownID = piece.id;
-                        }*/
+                        }
                         //PARCHE, Convierte una ficha en crown
-                        pieces Pieces = new pieces();//newCrown
+                        /*pieces Pieces = new pieces();//newCrown
                         Pieces.crown.col = move.col;
                         Pieces.crown.id = piece.id;
                         Pieces.crown.row = move.col;
                         piece.color = piece.color;
                         board.removePiece(piece.id);
                         board.pieces.Add(Pieces.crown);
-                        crownID = piece.id;
+                        crownID = piece.id;*/
 
                         break;
                     }
