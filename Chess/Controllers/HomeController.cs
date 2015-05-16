@@ -72,6 +72,7 @@ namespace Chess.Controllers
             String removeID = "";
             String crownID = "";
             Boolean isMoveable = false;
+            Boolean legitMove = false;
             bool SelectedCellEmpty = board.emptyCell(move.row, move.col);
             bool jumpAvailable = board.hasJump();
             List<cor> se = new List<cor>();
@@ -79,8 +80,9 @@ namespace Chess.Controllers
             var item = new cor();
             int x = piece.row;
             int y = piece.col;
-            //borrar este comentario
-            int Borrar = 0;
+
+            int rowStepSize = Math.Abs(piece.row - move.row);
+            int colStepSize = Math.Abs(piece.col - move.col);
             switch (Direction)
             {
                 case "cross":
@@ -90,72 +92,50 @@ namespace Chess.Controllers
                             if (jumpAvailable)
                             {
                                 //Try to eat. 
-                                if (Math.Abs(piece.row - move.row) == 2 || Math.Abs(piece.col - move.col) == 2)
+                                if (rowStepSize == 2 || colStepSize == 2)
                                 {
                                     properties pieceToEat = board.getEatenPiece(piece, move);
                                     if ((pieceToEat.color != board.currentColorTurn) && pieceToEat.color != "Blank")
                                     {
                                         string id = pieceToEat.id;
                                         removeID = id;
+                                        legitMove = true;
                                     }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                else
-                                {
-                                    break;
                                 }
                             }
-                            else if (Math.Abs(piece.row - move.row) != 1 || Math.Abs(piece.col - move.col) != 1)
+                            else if (rowStepSize == 1 && colStepSize == 1)
                             {
-                                break;
+                                legitMove = true;
                             }
-                        }
-                        else
-                        {
-                            break;
-                        }
 
-                        for (int i = 1; i <= stepSize; i++)
-                        {
-                            if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
-                            {
-                                se.Add(new cor() { col = y + i, row = x + i });
-                            }
-                            if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
-                            {
-                                se.Add(new cor() { col = y - i, row = x - i });
-                            }
-                            if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
-                            {
-                                se.Add(new cor() { col = y - i, row = x + i });
-                            }
-                            if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
-                            {
-                                se.Add(new cor() { col = y + i, row = x - i });
-                            }
                         }
-                        isMoveable = true;
-                        //Verificación para convertir la pieza en corona
-                        if (piece.name == "pawn" && (move.row == 1 || move.row == 8))
+                        /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
                             Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;        
-                            piece.color = piece.color;
+                            Pieces.crown.row = move.col;
+                            Pieces.crown.color = "White";
                             board.removePiece(piece.id);
                             board.pieces.Add(Pieces.crown);
                             crownID = piece.id;
                         }
-                        //PARCHE, Convierte una ficha en crown
+                        else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
+                        {
+                            pieces Pieces = new pieces();//newCrown
+                            Pieces.crown.col = move.col;
+                            Pieces.crown.id = piece.id;
+                            Pieces.crown.row = move.col;
+                            Pieces.crown.color = "Black";
+                            board.removePiece(piece.id);
+                            board.pieces.Add(Pieces.crown);
+                            crownID = piece.id;
+                        }*/
                         /*pieces Pieces = new pieces();//newCrown
                         Pieces.crown.col = move.col;
                         Pieces.crown.id = piece.id;
-                        Pieces.crown.row = move.col;
-                        piece.color = piece.color;
+                        Pieces.crown.row = move.row;
+                        Pieces.crown.color = piece.color;
                         board.removePiece(piece.id);
                         board.pieces.Add(Pieces.crown);
                         crownID = piece.id;*/
@@ -164,21 +144,40 @@ namespace Chess.Controllers
                     }
                 case "crown":
                     {
-                        int xDif = Math.Abs(piece.row - move.row);
-                        int yDif = Math.Abs(piece.col - move.col);
-                        if (Math.Abs(piece.row - move.row) == Math.Abs(piece.col - move.col))
+                        if (rowStepSize == colStepSize)
                         {
-                            isMoveable = true;
+
                         }
+                        isMoveable = true;
                         break;
                     }
-
-
-
             }
 
+            if (legitMove)
+            {
+                for (int i = 1; i <= stepSize; i++)
+                {
+                    if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
+                    {
+                        se.Add(new cor() { col = y + i, row = x + i });
+                    }
+                    if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
+                    {
+                        se.Add(new cor() { col = y - i, row = x - i });
+                    }
+                    if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
+                    {
+                        se.Add(new cor() { col = y - i, row = x + i });
+                    }
+                    if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
+                    {
+                        se.Add(new cor() { col = y + i, row = x - i });
+                    }
+                }
+                isMoveable = true;
+            }
 
-            foreach (var direct in se)//hareket ettiği eksende hangi taşlar var
+            foreach (var direct in se)
             {
                 foreach (var pc in board.pieces)
                 {
@@ -224,9 +223,9 @@ namespace Chess.Controllers
 
             switch (piece.name)
             {
-                case "pawn"://
+                case "pawn":
                     {
-                        int stepSize = piece.isStart == true ? 1 : 2;//ilk hareketinde 2 tane adım atabilir
+                        int stepSize = piece.isStart == true ? 1 : 2;
                         Boolean backControl = piece.color == piece.getColor.black ? (piece.row - move.row > 0 ? false : true)
                                                                                   : (piece.row - move.row < 0 ? false : true); //geriye gidebilirmi?
                         result = backControl == true ? OControl(move, piece, stepSize, Direction) : "false;";//geriye gidebilirmi?                                               
