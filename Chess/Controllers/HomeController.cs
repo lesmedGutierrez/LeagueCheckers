@@ -69,20 +69,25 @@ namespace Chess.Controllers
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
             board.currentColorTurn = piece.color;
+
             String removeID = "";
             String crownID = "";
             Boolean isMoveable = false;
+
             Boolean legitMove = false;
+            
             bool SelectedCellEmpty = board.emptyCell(move.row, move.col);
             bool jumpAvailable = board.hasJump();
+            
             List<cor> se = new List<cor>();
             List<properties> ps = new List<properties>();
-            var item = new cor();
+            
             int x = piece.row;
             int y = piece.col;
 
             int rowStepSize = Math.Abs(piece.row - move.row);
             int colStepSize = Math.Abs(piece.col - move.col);
+            
             switch (Direction)
             {
                 case "cross":
@@ -109,36 +114,6 @@ namespace Chess.Controllers
                             }
 
                         }
-                        /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
-                        {
-                            pieces Pieces = new pieces();//newCrown
-                            Pieces.crown.col = move.col;
-                            Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;
-                            Pieces.crown.color = "White";
-                            board.removePiece(piece.id);
-                            board.pieces.Add(Pieces.crown);
-                            crownID = piece.id;
-                        }
-                        else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
-                        {
-                            pieces Pieces = new pieces();//newCrown
-                            Pieces.crown.col = move.col;
-                            Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;
-                            Pieces.crown.color = "Black";
-                            board.removePiece(piece.id);
-                            board.pieces.Add(Pieces.crown);
-                            crownID = piece.id;
-                        }*/
-                        /*pieces Pieces = new pieces();//newCrown
-                        Pieces.crown.col = move.col;
-                        Pieces.crown.id = piece.id;
-                        Pieces.crown.row = move.row;
-                        Pieces.crown.color = piece.color;
-                        board.removePiece(piece.id);
-                        board.pieces.Add(Pieces.crown);
-                        crownID = piece.id;*/
 
                         break;
                     }

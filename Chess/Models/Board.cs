@@ -129,7 +129,7 @@ namespace Chess.Models
 
         public properties getPiece(int row, int col)
         {
-            if (row <= 8 && col <= 8)
+            if (row >= 1 && col >= 1 && row <= 8 && col <= 8)
             {
                 for (int i = 0; i < pieces.Count; i++)
                 {
