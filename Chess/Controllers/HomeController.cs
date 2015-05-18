@@ -109,46 +109,47 @@ namespace Chess.Controllers
                             }
 
                         }
-                        /*if(piece.color == "White" && move.row == 1 && piece.name == "pawn")
+                        //Testing
+                        if (((move.row == 1  || move.row == 8) && piece.name == "pawn"))
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
                             Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;
-                            Pieces.crown.color = "White";
+                            Pieces.crown.row = move.row;
+                            Pieces.crown.name = piece.name;
+                            Pieces.crown.color = piece.color;
                             board.removePiece(piece.id);
                             board.pieces.Add(Pieces.crown);
                             crownID = piece.id;
                         }
-                        else if (piece.color == "Black" && move.row == 8 && piece.name == "pawn")
-                        {
-                            pieces Pieces = new pieces();//newCrown
-                            Pieces.crown.col = move.col;
-                            Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.col;
-                            Pieces.crown.color = "Black";
-                            board.removePiece(piece.id);
-                            board.pieces.Add(Pieces.crown);
-                            crownID = piece.id;
-                        }*/
-                        /*pieces Pieces = new pieces();//newCrown
-                        Pieces.crown.col = move.col;
-                        Pieces.crown.id = piece.id;
-                        Pieces.crown.row = move.row;
-                        Pieces.crown.color = piece.color;
-                        board.removePiece(piece.id);
-                        board.pieces.Add(Pieces.crown);
-                        crownID = piece.id;*/
 
                         break;
                     }
                 case "crown":
                     {
-                        if (rowStepSize == colStepSize)
+                        if (SelectedCellEmpty)
                         {
+                            if (jumpAvailable)
+                            {
+                                //Try to eat. 
+                                if (rowStepSize == 2 || colStepSize == 2)
+                                {
+                                    properties pieceToEat = board.getEatenPiece(piece, move);
+                                    if ((pieceToEat.color != board.currentColorTurn) && pieceToEat.color != "Blank")
+                                    {
+                                        string id = pieceToEat.id;
+                                        removeID = id;
+                                        legitMove = true;
+                                    }
+                                }
+                            }
+                            else if (rowStepSize == 1 && colStepSize == 1)
+                            {
+                                legitMove = true;
+                            }
 
                         }
-                        isMoveable = true;
+                        
                         break;
                     }
             }
@@ -234,7 +235,10 @@ namespace Chess.Controllers
                 //WIP, working on the moves of the crown
                 case "crown":
                     {
-                        result = true ? OControl(move, piece, 0, "crown") : "false";
+                        int stepSize = piece.isStart == true ? 1 : 2;
+                        Boolean backControl = piece.color == piece.getColor.black ? (piece.row - move.row > 0 ? false : true)
+                                                                                  : (piece.row - move.row < 0 ? false : true); //geriye gidebilirmi?
+                        result = true ? OControl(move, piece, stepSize, "crown") : "false";
                         break;
                     }
             }
