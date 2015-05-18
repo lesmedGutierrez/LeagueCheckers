@@ -110,6 +110,8 @@ namespace Chess.Controllers
 
                         }
                         //Testing
+                        //Parche para commit
+                        //hola
                         if (((move.row == 1  || move.row == 8) && piece.name == "pawn"))
                         {
                             pieces Pieces = new pieces();//newCrown
