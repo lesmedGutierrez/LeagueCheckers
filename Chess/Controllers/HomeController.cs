@@ -15,15 +15,9 @@ namespace Chess.Controllers
     {
         public static Board board = new Board();
 
-        public class cor
-        {
-            public int col { get; set; }
-            public int row { get; set; }
-        }
 
         public ActionResult Index()
         {
-            //ilk önce siyah taşları diz
             board.pieces.Clear();
 
 
@@ -69,20 +63,21 @@ namespace Chess.Controllers
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
             board.currentColorTurn = piece.color;
+
             String removeID = "";
             String crownID = "";
-            Boolean isMoveable = false;
+
             Boolean legitMove = false;
+            
             bool SelectedCellEmpty = board.emptyCell(move.row, move.col);
             bool jumpAvailable = board.hasJump();
-            List<cor> se = new List<cor>();
-            List<properties> ps = new List<properties>();
-            var item = new cor();
+            
             int x = piece.row;
             int y = piece.col;
 
             int rowStepSize = Math.Abs(piece.row - move.row);
             int colStepSize = Math.Abs(piece.col - move.col);
+            
             switch (Direction)
             {
                 case "cross":
@@ -97,8 +92,8 @@ namespace Chess.Controllers
                                     properties pieceToEat = board.getEatenPiece(piece, move);
                                     if ((pieceToEat.color != board.currentColorTurn) && pieceToEat.color != "Blank")
                                     {
-                                        string id = pieceToEat.id;
-                                        removeID = id;
+                                        removeID = pieceToEat.id;
+                                        board.removePiece(removeID);
                                         legitMove = true;
                                     }
                                 }
@@ -107,12 +102,8 @@ namespace Chess.Controllers
                             {
                                 legitMove = true;
                             }
-
                         }
-                        //Testing
-                        //Parche para commit
-                        //hola
-                        if (((move.row == 1  || move.row == 8) && piece.name == "pawn"))
+                        if (((move.row == 1 || move.row == 8) && piece.name == "pawn") || true)
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
@@ -124,9 +115,9 @@ namespace Chess.Controllers
                             board.pieces.Add(Pieces.crown);
                             crownID = piece.id;
                         }
-
                         break;
                     }
+
                 case "crown":
                     {
                         if (SelectedCellEmpty)
@@ -151,68 +142,18 @@ namespace Chess.Controllers
                             }
 
                         }
-                        
+
                         break;
                     }
             }
 
             if (legitMove)
             {
-                for (int i = 1; i <= stepSize; i++)
-                {
-                    if (move.row > piece.row && move.col > piece.col && x + i <= 8 && y + i <= 8)//x+ y+
-                    {
-                        se.Add(new cor() { col = y + i, row = x + i });
-                    }
-                    if (move.row < piece.row && move.col < piece.col && x - i >= 1 && y - i >= 1)//x- y-
-                    {
-                        se.Add(new cor() { col = y - i, row = x - i });
-                    }
-                    if (move.row > piece.row && move.col < piece.col && x + i <= 8 && y - i >= 1)//x+ y-
-                    {
-                        se.Add(new cor() { col = y - i, row = x + i });
-                    }
-                    if (move.row < piece.row && move.col > piece.col && x - i >= 1 && y + i <= 8)//x- y+
-                    {
-                        se.Add(new cor() { col = y + i, row = x - i });
-                    }
-                }
-                isMoveable = true;
+                piece.col = move.col;
+                piece.row = move.row;
+                piece.isStart = true;
             }
-
-            foreach (var direct in se)
-            {
-                foreach (var pc in board.pieces)
-                {
-                    if (direct.row == pc.row && direct.col == pc.col)
-                    {
-                        ps.Add(pc);
-                    }
-                }
-            }
-
-            if (se.Count > 0)
-            {
-                if (ps.Count == 0)//önünde taş yoksa hareket edebilir
-                {
-                    if (!(Direction == "cross" && piece.name == piece.getName.pawn))
-                    {
-                        isMoveable = true;
-                    }
-                }
-
-                if (isMoveable == true)//hareket kabul edildiyse
-                {
-                    piece.col = move.col;//kalenin yeni sutun değerini güncelle
-                    piece.row = move.row;//kalenin yeni satır değeri güncelle
-                    piece.isStart = true;// ilk hareket aktif et
-                }
-            }
-            board.removePiece(removeID);
-
-
-            return isMoveable + ";" + removeID + ";" + crownID;
-
+            return legitMove + ";" + removeID + ";" + crownID;
         }
 
 
@@ -230,16 +171,16 @@ namespace Chess.Controllers
                     {
                         int stepSize = piece.isStart == true ? 1 : 2;
                         Boolean backControl = piece.color == piece.getColor.black ? (piece.row - move.row > 0 ? false : true)
-                                                                                  : (piece.row - move.row < 0 ? false : true); //geriye gidebilirmi?
-                        result = backControl == true ? OControl(move, piece, stepSize, Direction) : "false;";//geriye gidebilirmi?                                               
+                                                                                  : (piece.row - move.row < 0 ? false : true); 
+                        result = backControl == true ? OControl(move, piece, stepSize, Direction) : "false;";//                                         
                         break;
                     }
-                //WIP, working on the moves of the crown
+
                 case "crown":
                     {
                         int stepSize = piece.isStart == true ? 1 : 2;
                         Boolean backControl = piece.color == piece.getColor.black ? (piece.row - move.row > 0 ? false : true)
-                                                                                  : (piece.row - move.row < 0 ? false : true); //geriye gidebilirmi?
+                                                          : (piece.row - move.row < 0 ? false : true);
                         result = true ? OControl(move, piece, stepSize, "crown") : "false";
                         break;
                     }
