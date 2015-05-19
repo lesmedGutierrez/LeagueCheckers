@@ -103,7 +103,7 @@ namespace Chess.Controllers
                                 legitMove = true;
                             }
                         }
-                        if (((move.row == 1 || move.row == 8) && piece.name == "pawn") || true)
+                        if (((move.row == 1 || move.row == 8) && piece.name == "pawn"))
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
