@@ -23,8 +23,17 @@
         <img alt="full screen background image" src="~/Content/MatchBackground.jpg" id="full-screen-background-image" />
 
         <div class="row" id="empty"style="height:10%">
+            
             <div class="col-md-2"></div>
+            <div class="" id="score">
+                <l1 class="label" id="redPlayerScore">0</l1>
+                <l2 class="label" id="playerTurn">Red</l2>
+                <l3 class="label" id="bluePlayerScore">0</l3>
+            </div>
+            
+
         </div>
+        
 
         
 
@@ -39,6 +48,7 @@
                 </div>
 
 
+                
 
                 <div id="tablero" class="col-md-6">
                     <table id="chessBoard" style="" class="">
@@ -495,9 +505,11 @@
                         if (counter % 2 == 0) {
                             $("div[data-color=Black]").draggable('disable');
                             $("div[data-color=White]").draggable('enable');
+                            $("#playerTurn").text("Red");
                         } else {
                             $("div[data-color=Black]").draggable('enable');
                             $("div[data-color=White]").draggable('disable');
+                            $("#playerTurn").text("Blue");
                         }
                         if (result[1]) {
                             $("#" + result[1]).hide("explode", 200);
@@ -513,6 +525,12 @@
                             }
                             $("#" + result[2]).show("pulsate", 2000);
                         }
+                        if (result[3]) {
+                            var scores = result[3].split('|');
+                            $("#redPlayerScore").text(scores[0]);
+                            $("#bluePlayerScore").text(scores[1]);
+                        }
+
                     } else {
                         $("#" + ui.draggable[0].id).offset({ top: x, left: y })
                     }

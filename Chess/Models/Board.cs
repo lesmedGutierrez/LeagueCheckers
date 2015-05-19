@@ -11,6 +11,8 @@ namespace Chess.Models
         public List<properties> pieces = new List<properties>();
         public string currentColorTurn = "";
         public const int SIZE = 8;
+        public int redPlayerScore = 0;
+        public int bluePlayerScore = 0;
 
 
 
@@ -168,6 +170,18 @@ namespace Chess.Models
             string p = getPiece(row, col).color;
 
             return getPiece(row, col).color == "Blank" ? true : false;
+        }
+
+        public bool isFinished()
+        {
+            int blacksPieces = 0;
+            int whitePieces = 0;
+            foreach (properties item in pieces)
+            {
+                if (item.color == "White") whitePieces++;
+                else blacksPieces++;
+            }
+            return (blacksPieces == 0 || whitePieces == 0);
         }
     }
 }

@@ -103,7 +103,7 @@ namespace Chess.Controllers
                                 legitMove = true;
                             }
                         }
-                        if (((move.row == 1 || move.row == 8) && piece.name == "pawn") || true)
+                        if (((move.row == 1 || move.row == 8) && piece.name == "pawn"))
                         {
                             pieces Pieces = new pieces();//newCrown
                             Pieces.crown.col = move.col;
@@ -184,8 +184,19 @@ namespace Chess.Controllers
                         result = true ? OControl(move, piece, stepSize, "crown") : "false";
                         break;
                     }
-            }
 
+            }
+            if (board.isFinished())
+            {
+                if (board.currentColorTurn == "White") board.redPlayerScore++;
+                else board.bluePlayerScore++;
+                result += ";" + board.redPlayerScore + "|" + board.bluePlayerScore;
+            }
+            else
+            {
+                result += ";";
+            }
+            
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }

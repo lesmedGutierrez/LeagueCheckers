@@ -133,3 +133,7 @@ div.whiteCrown
     width: 60px;
     height: 60px;
 }
+
+.label {
+    font-size:13px;
+}
