@@ -69,32 +69,32 @@ namespace Chess.Models
             {
                 opponent = "Black";
             }
-            else 
+            else
             {
                 opponent = "White";
             }
             if (col > 1 && row > 1 &&
-               getPiece(row - 1, col - 1).color == opponent && getPiece(row - 2, col - 2).color == "Blank") // check jump to the left
+               getPiece(row - 1, col - 1).color == opponent && getPiece(row - 2, col - 2).color == "Blank") // check jump to the left 
             {
                 return true;
             }
             if (col < 6 && row > 1 &&
-               getPiece(row - 1, col + 1).color == opponent && getPiece(row - 2, col + 2).color == "Blank") // check jump to the right
+               getPiece(row - 1, col + 1).color == opponent && getPiece(row - 2, col + 2).color == "Blank") // check jump to the right 
             {
                 return true;
             }
             if (col > 1 && row < 6 &&
-               getPiece(row + 1, col - 1).color == "White" && getPiece(row + 2, col - 2).color == "Blank") // check jump to the left
+               getPiece(row + 1, col - 1).color == opponent && getPiece(row + 2, col - 2).color == "Blank") // check jump to the left 
             {
                 return true;
             }
             if (col < 6 && row < 6 &&
-               getPiece(row + 1, col + 1).color == "White" && getPiece(row + 2, col + 2).color == "Blank") // check jump to the right
+               getPiece(row + 1, col + 1).color == opponent && getPiece(row + 2, col + 2).color == "Blank") // check jump to the right 
             {
                 return true;
             }
             return false;
-        }
+        } 
 
 
         public bool hasJump()
@@ -167,8 +167,6 @@ namespace Chess.Models
 
         public bool emptyCell(int row, int col)
         {
-            string p = getPiece(row, col).color;
-
             return getPiece(row, col).color == "Blank" ? true : false;
         }
 

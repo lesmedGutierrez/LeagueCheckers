@@ -70,10 +70,7 @@ namespace Chess.Controllers
             Boolean legitMove = false;
             
             bool SelectedCellEmpty = board.emptyCell(move.row, move.col);
-            bool jumpAvailable = board.hasJump();
-            
-            int x = piece.row;
-            int y = piece.col;
+            bool jumpAvailable = board.hasJump();            
 
             int rowStepSize = Math.Abs(piece.row - move.row);
             int colStepSize = Math.Abs(piece.col - move.col);
@@ -105,14 +102,11 @@ namespace Chess.Controllers
                         }
                         if (((move.row == 1 || move.row == 8) && piece.name == "pawn"))
                         {
-                            pieces Pieces = new pieces();//newCrown
-                            Pieces.crown.col = move.col;
-                            Pieces.crown.id = piece.id;
-                            Pieces.crown.row = move.row;
-                            Pieces.crown.name = piece.name;
-                            Pieces.crown.color = piece.color;
+                            piece.col = move.col;
+                            piece.row = move.row;
+                            piece.name = "crown";
                             board.removePiece(piece.id);
-                            board.pieces.Add(Pieces.crown);
+                            board.pieces.Add(piece);
                             crownID = piece.id;
                         }
                         break;
@@ -120,38 +114,40 @@ namespace Chess.Controllers
 
                 case "crown":
                     {
-                        if (SelectedCellEmpty)
-                        {
-                            if (jumpAvailable)
-                            {
+                    if(SelectedCellEmpty){
+                       if (jumpAvailable)
+                       {
                                 //Try to eat. 
                                 if (rowStepSize == 2 || colStepSize == 2)
                                 {
                                     properties pieceToEat = board.getEatenPiece(piece, move);
                                     if ((pieceToEat.color != board.currentColorTurn) && pieceToEat.color != "Blank")
                                     {
-                                        string id = pieceToEat.id;
-                                        removeID = id;
+                                        removeID = pieceToEat.id;
+                                        board.removePiece(removeID);
                                         legitMove = true;
                                     }
                                 }
                             }
-                            else if (rowStepSize == 1 && colStepSize == 1)
+                            else
                             {
                                 legitMove = true;
                             }
-
                         }
-
                         break;
                     }
             }
 
             if (legitMove)
             {
+                board.removePiece(piece.id);
                 piece.col = move.col;
                 piece.row = move.row;
-                piece.isStart = true;
+                if (piece.name == "crown")
+                {
+                    piece.name = "crown";   
+                }
+                board.pieces.Add(piece);
             }
             return legitMove + ";" + removeID + ";" + crownID;
         }
@@ -203,4 +199,5 @@ namespace Chess.Controllers
 
 
     }
+
 }
