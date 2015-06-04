@@ -21,5 +21,13 @@ div.form-item-wrapper{
     width: 100%;
     display: block;
     border: #808080;
+    margin-top: 25%;
+    margin-left: 20%;
 }
+
+#difficulty-button {
+    width:67%;
+}
+
+
 
