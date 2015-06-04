@@ -16,6 +16,11 @@ namespace Chess.Controllers
         public static Board board = new Board();
 
 
+        public ActionResult MainMenu()
+        {
+            return View("MainMenu");
+        }
+
         public ActionResult Index()
         {
             board.pieces.Clear();

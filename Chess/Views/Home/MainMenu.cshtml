@@ -1,32 +1,51 @@
-﻿@model Chess.Models.Board
-<html>
-<head>
-    <title>League Checkers - A Masters Journey</title>
+﻿
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>League Checkers - A Masters Journey</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/Content/mainmenu.css" rel="stylesheet" />
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery-1.9.1.js"></script>
-    <script src="~/Scripts/jquery-ui-1.10.2.min.js"></script>
-</head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="~/Content/mainmenu.css" rel="stylesheet" />
 
 
-<body>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="~/Scripts/jquery-1.9.1.js"></script>
+        <script src="~/Scripts/jquery-ui-1.10.2.min.js"></script>
+    </head>
 
-    <div>
-        WELCOME
+
+<body style="background: black">
+
+    <div id="responsive_div">
+        <div id="menuArea">
+            <div class="form-item-wrapper" style="background:#ff0000 ">
+                <div class="form-button" id="test-button">
+                    <button type="button" class="btn btn-default">Jugar partida (TEST)</button>
+                </div>
+
+                <div class="form-button" id="single-player-button">
+                    <button type="button" class="btn btn-default">Jugar partida contra IA</button>
+                </div>
+
+                <div class="form-button" id="difficulty-button">
+                    <select class="form-control">
+                        <option value="Principiante">Principante</option>
+                        <option value="Intermedio">Intermedio</option>
+                        <option value="Avanzado">Avanzado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
-
 
 </body>
 
 
 
 </html>
+
 <script>
 
 
