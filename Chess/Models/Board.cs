@@ -10,6 +10,7 @@ namespace Chess.Models
     {
         public List<properties> pieces = new List<properties>();
         public string currentColorTurn = "";
+        public bool bot = false;
         public const int SIZE = 8;
         public int redPlayerScore = 0;
         public int bluePlayerScore = 0;
@@ -99,6 +100,8 @@ namespace Chess.Models
 
         public bool hasJump()
         {
+
+
             for (int i = 0; i < pieces.Count; i++)
             {
                 string pieceColor = pieces[i].color;

@@ -14,6 +14,8 @@ namespace Chess.Controllers
     public class HomeController : Controller
     {
         public static Board board = new Board();
+        public ComputerPlayer computer = new ComputerPlayer(); 
+
 
 
         public ActionResult Index()
@@ -36,9 +38,9 @@ namespace Chess.Controllers
                 {
                     control = false;
                 }
-                if (j == 3)// ikinci olarak beyaz taşları diz
+                if (j == 3)
                 {
-                    x1 = 6;//7.satıra taşları diz
+                    x1 = 6;
                     color = "White";
                 }
 
@@ -67,7 +69,8 @@ namespace Chess.Controllers
 
         public String OControl(moveC move, properties piece, Int32? stepSize, String Direction)
         {
-            board.currentColorTurn = piece.color;
+            board.currentColorTurn = piece.color; //No es bajo acoplamiento.
+
 
             String removeID = "";
             String crownID = "";
@@ -75,6 +78,7 @@ namespace Chess.Controllers
             Boolean legitMove = false;
             
             bool SelectedCellEmpty = board.emptyCell(move.row, move.col);
+
             bool jumpAvailable = board.hasJump();            
 
             int rowStepSize = Math.Abs(piece.row - move.row);
@@ -153,8 +157,47 @@ namespace Chess.Controllers
                     piece.name = "crown";   
                 }
                 board.pieces.Add(piece);
+
+                board.bot = true;
             }
+
             return legitMove + ";" + removeID + ";" + crownID;
+        }
+
+        public JsonResult smartMove()
+        {
+
+            properties pieceToMove = null;
+
+            //Check if a piece can Jump
+            for (int i = 0; i < board.pieces.Count; i++)
+            {
+                string pieceColor = board.pieces[i].color;
+
+                if (pieceColor == board.currentColorTurn)
+                {
+                    if (board.canJump(board.pieces[i]))
+                    {
+                        pieceToMove = board.pieces[i];
+                        computer.pieceToMove = pieceToMove;
+                        break;
+                    }
+                }
+            }
+
+            //Now we have that piece which is PieceToMove or not. We gotta check that so.
+
+            if (pieceToMove != null)
+            {
+                properties piece = getPieceToRemove(pieceToMove);
+                //Move it
+            }
+            else
+            {
+                moveC avialableMove = getAvailableMove();
+                //Move it
+            }
+            return null;
         }
 
 
@@ -201,8 +244,6 @@ namespace Chess.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }
-
-
     }
 
 }
