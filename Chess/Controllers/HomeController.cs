@@ -180,6 +180,7 @@ namespace Chess.Controllers
                     {
                         pieceToMove = board.pieces[i];
                         computer.pieceToMove = pieceToMove;
+                        computer.jump(pieceToMove);
                         break;
                     }
                 }
@@ -189,12 +190,12 @@ namespace Chess.Controllers
 
             if (pieceToMove != null)
             {
-                properties piece = getPieceToRemove(pieceToMove);
+                
                 //Move it
             }
             else
             {
-                moveC avialableMove = getAvailableMove();
+                computer.moveRandomPiece(board.pieces);
                 //Move it
             }
             return null;
